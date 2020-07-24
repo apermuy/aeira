@@ -1,0 +1,101 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the profilename install profile.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function aeira_install() {
+  // First, do everything in standard profile.
+  include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
+  standard_install();
+
+
+  // Add content type
+  $type = \Drupal\node\Entity\NodeType::create([
+    'type' => 'elemento',
+    'name' => 'Elemento',
+  ]);
+  
+  $type->save();
+
+
+  // Add field
+  \Drupal\field\Entity\FieldStorageConfig::create(array(
+    'field_name' => 'field_text',
+    'entity_type' => 'node',
+    'type' => 'text',
+    'cardinality' => -1,
+  ))->save();
+
+  \Drupal\field\Entity\FieldConfig::create([
+    'field_name' => 'field_text',
+    'entity_type' => 'node',
+    'bundle' => 'elemento',
+    'label' => 'A Text field',
+  ])->save();
+
+  $entityDisplayRepository = \Drupal::service('entity_display.repository');
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_text', ['type' => 'text_textfield']);
+  $form_display->save();
+
+
+  $values = array(
+    'targetEntityType' => 'node',
+    'bundle' => 'elemento',
+    'mode' => 'default',
+    'status' => TRUE,
+  );
+  \Drupal::entityTypeManager()
+    ->getStorage('entity_view_display')
+    ->create($values);
+
+  // Create custom vocabulary "Tipo de elemento"
+
+  $vid = "tipo";
+  $name = "Tipo de elemento";
+  $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
+
+  if (!isset($vocabularies[$vid])) {
+    $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
+          'vid' => $vid,
+          'description' => 'Vocabulario taxonómico que contiene distintos los distintos tipos de elementos del proyecto',
+          'name' => $name,
+    ));
+    $vocabulary->save();
+  }
+  else {
+    // Vocabulary Already exist
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', $vid);
+    $tids = $query->execute();
+  }
+
+  // Create custom vocabulary "Parroquia"
+
+  $vid = "parroquia";
+  $name = "Parroquia";
+  $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
+
+  if (!isset($vocabularies[$vid])) {
+    $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
+          'vid' => $vid,
+          'description' => 'Vocabulario taxonómico que identifica la parroquia',
+          'name' => $name,
+    ));
+    $vocabulary->save();
+  }
+  else {
+    // Vocabulary Already exist
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', $vid);
+    $tids = $query->execute();
+  }
+
+}   
