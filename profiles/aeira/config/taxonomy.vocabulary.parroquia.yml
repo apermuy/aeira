@@ -1,8 +1,0 @@
-uuid: 8b4be921-b5e6-4979-ab24-38cef44a3062
-langcode: en
-status: true
-dependencies: {  }
-name: Parroquia
-vid: parroquia
-description: 'Vocabulario taxonómico que identifica la parroquia'
-weight: 0

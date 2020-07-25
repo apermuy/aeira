@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the profilename install profile.
+ * Install, update and uninstall functions for aeira install profile.
  */
 
 /**
@@ -17,7 +17,7 @@ function aeira_install() {
   standard_install();
 
 
-  // Add content type
+  // Crear tipo de contido elemento
   $type = \Drupal\node\Entity\NodeType::create([
     'type' => 'elemento',
     'name' => 'Elemento',
@@ -25,8 +25,18 @@ function aeira_install() {
   
   $type->save();
 
+  $values = array(
+    'targetEntityType' => 'node',
+    'bundle' => 'elemento',
+    'mode' => 'default',
+    'status' => TRUE,
+  );
+  \Drupal::entityTypeManager()
+    ->getStorage('entity_view_display')
+    ->create($values);
 
-  // Add field
+
+  // Engadir campo
   \Drupal\field\Entity\FieldStorageConfig::create(array(
     'field_name' => 'field_text',
     'entity_type' => 'node',
@@ -46,16 +56,7 @@ function aeira_install() {
   $form_display->save();
 
 
-  $values = array(
-    'targetEntityType' => 'node',
-    'bundle' => 'elemento',
-    'mode' => 'default',
-    'status' => TRUE,
-  );
-  \Drupal::entityTypeManager()
-    ->getStorage('entity_view_display')
-    ->create($values);
-
+  
   // Create custom vocabulary "Tipo de elemento"
 
   $vid = "tipo";
@@ -86,7 +87,7 @@ function aeira_install() {
   if (!isset($vocabularies[$vid])) {
     $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
           'vid' => $vid,
-          'description' => 'Vocabulario taxonómico que identifica la parroquia',
+          'description' => 'Vocabulario taxonómico que identifica á parroquia',
           'name' => $name,
     ));
     $vocabulary->save();
@@ -97,5 +98,87 @@ function aeira_install() {
     $query->condition('vid', $vid);
     $tids = $query->execute();
   }
+
+
+    // Create custom vocabulary "Concello"
+
+    $vid = "concello";
+    $name = "Concello";
+    $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
+  
+    if (!isset($vocabularies[$vid])) {
+      $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
+            'vid' => $vid,
+            'description' => 'Vocabulario taxonómico que identifica ó Concello',
+            'name' => $name,
+      ));
+      $vocabulary->save();
+    }
+    else {
+      // Vocabulary Already exist
+      $query = \Drupal::entityQuery('taxonomy_term');
+      $query->condition('vid', $vid);
+      $tids = $query->execute();
+    }
+
+    // Engadir campo parroquia 
+    \Drupal\field\Entity\FieldStorageConfig::create(array(
+      'field_name' => 'field_parroquia',
+      'entity_type' => 'node',
+      'type' => 'entity_reference',
+      'settings' => array(
+        'target_type' => 'taxonomy_term',
+      ),
+    ))->save();
+  
+    \Drupal\field\Entity\FieldConfig::create(array(
+      'field_name' => 'field_parroquia',
+      'entity_type' => 'node',
+      'bundle' => 'elemento',
+      'label' => 'Parroquia',
+      'settings' => array(
+        'handler_settings' => array(
+          'target_bundles' => array(
+            'parroquia' => 'parroquia',
+          ),
+          'auto_create' => TRUE,
+        ),
+      ),
+    ))->save();
+  
+    $entityDisplayRepository = \Drupal::service('entity_display.repository');
+    $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_parroquia', ['type' => 'entity_reference_autocomplete_tags']);
+    $form_display->save();
+
+
+
+    // Engadir campo Concello a Parroquia
+        \Drupal\field\Entity\FieldStorageConfig::create(array(
+          'field_name' => 'field_parroquia_concello',
+          'entity_type' => 'taxonomy_term',
+          'type' => 'entity_reference',
+          'settings' => array(
+            'target_type' => 'taxonomy_term',
+          ),
+        ))->save();
+      
+        \Drupal\field\Entity\FieldConfig::create(array(
+          'field_name' => 'field_parroquia_concello',
+          'entity_type' => 'taxonomy_term',
+          'bundle' => 'parroquia',
+          'label' => 'Concello',
+          'settings' => array(
+            'handler_settings' => array(
+              'target_bundles' => array(
+                'concello' => 'concello',
+              ),
+              'auto_create' => TRUE,
+            ),
+          ),
+        ))->save();
+      
+        $entityDisplayRepository = \Drupal::service('entity_display.repository');
+        $form_display = $entityDisplayRepository->getFormDisplay('taxonomy_term', 'parroquia')->setComponent('field_parroquia_concello', ['type' => 'entity_reference_autocomplete_tags']);
+        $form_display->save();    
 
 }   
