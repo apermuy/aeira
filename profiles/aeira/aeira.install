@@ -391,6 +391,24 @@ function aeira_install() {
   
   $path_alias->save();
 
+  // Formulario de contacto
+  $feedback_form = \Drupal\contact\Entity\ContactForm::create([
+    'id' => 'contacto',
+    'label' => 'Contacto',
+    'recipients' => ['somebody@example.com'],
+    'reply' => '',
+    'redirect' => '/my/path',
+    'weight' => 0,
+    ]);
+  $feedback_form->save();
+
+  // Blocks
+  $block = \Drupal\block_content\Entity\BlockContent::create([
+    'info' => 'block 1',
+    'type' => 'basic',
+    'langcode' => 'es',
+  ]);
+  $block->save();
 
   //
   // Theme
