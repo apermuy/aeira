@@ -16,8 +16,10 @@ function aeira_install() {
   include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
   standard_install();
 
-
-  // Crear tipo de contido elemento
+  // 
+  // Tipos de contido
+  // 
+  // Elemento
   $type = \Drupal\node\Entity\NodeType::create([
     'type' => 'elemento',
     'name' => 'Elemento',
@@ -35,29 +37,89 @@ function aeira_install() {
     ->getStorage('entity_view_display')
     ->create($values);
 
+  // Páxina
+  $type = \Drupal\node\Entity\NodeType::create([
+    'type' => 'paxina',
+    'name' => 'Páxina',
+  ]);
+  
+  $type->save();
 
-  // Engadir campo
+  $values = array(
+    'targetEntityType' => 'node',
+    'bundle' => 'paxina',
+    'mode' => 'default',
+    'status' => TRUE,
+  );
+  \Drupal::entityTypeManager()
+    ->getStorage('entity_view_display')
+    ->create($values);
+
+  //
+  // Campos
+  //
+  // Lugar
   \Drupal\field\Entity\FieldStorageConfig::create(array(
-    'field_name' => 'field_text',
+    'field_name' => 'field_lugar_elemento',
     'entity_type' => 'node',
     'type' => 'text',
     'cardinality' => -1,
   ))->save();
 
   \Drupal\field\Entity\FieldConfig::create([
-    'field_name' => 'field_text',
+    'field_name' => 'field_lugar_elemento',
     'entity_type' => 'node',
     'bundle' => 'elemento',
-    'label' => 'A Text field',
+    'label' => 'Lugar',
   ])->save();
 
   $entityDisplayRepository = \Drupal::service('entity_display.repository');
-  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_text', ['type' => 'text_textfield']);
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_lugar_elemento', ['type' => 'text_textfield']);
   $form_display->save();
 
+  // Código
+  \Drupal\field\Entity\FieldStorageConfig::create(array(
+    'field_name' => 'field_codigo_elemento',
+    'entity_type' => 'node',
+    'type' => 'text',
+    'cardinality' => -1,
+  ))->save();
 
-  
-  // Create custom vocabulary "Tipo de elemento"
+  \Drupal\field\Entity\FieldConfig::create([
+    'field_name' => 'field_codigo_elemento',
+    'entity_type' => 'node',
+    'bundle' => 'elemento',
+    'label' => 'Código',
+  ])->save();
+
+  $entityDisplayRepository = \Drupal::service('entity_display.repository');
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_codigo_elemento', ['type' => 'text_textfield']);
+  $form_display->save();
+
+  // Descrición
+  \Drupal\field\Entity\FieldStorageConfig::create(array(
+    'field_name' => 'field_descricion_elemento',
+    'entity_type' => 'node',
+    'type' => 'text_long',
+    'format' => 'full_html',
+    'cardinality' => -1,
+  ))->save();
+
+  \Drupal\field\Entity\FieldConfig::create([
+    'field_name' => 'field_descricion_elemento',
+    'entity_type' => 'node',
+    'bundle' => 'elemento',
+    'label' => 'Descrición',
+  ])->save();
+
+  $entityDisplayRepository = \Drupal::service('entity_display.repository');
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_descricion_elemento', ['type' => 'text_textarea']);
+  $form_display->save();
+  // 
+  // Vocabularios taxonómicos
+  //
+
+  // Tipo de elemento
 
   $vid = "tipo";
   $name = "Tipo de elemento";
@@ -78,7 +140,7 @@ function aeira_install() {
     $tids = $query->execute();
   }
 
-  // Create custom vocabulary "Parroquia"
+  // Parroquia
 
   $vid = "parroquia";
   $name = "Parroquia";
@@ -100,30 +162,55 @@ function aeira_install() {
   }
 
 
-    // Create custom vocabulary "Concello"
+  // Concello
 
-    $vid = "concello";
-    $name = "Concello";
-    $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
+  $vid = "concello";
+  $name = "Concello";
+  $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
   
-    if (!isset($vocabularies[$vid])) {
-      $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
+  if (!isset($vocabularies[$vid])) {
+    $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
             'vid' => $vid,
             'description' => 'Vocabulario taxonómico que identifica ó Concello',
             'name' => $name,
-      ));
-      $vocabulary->save();
-    }
+    ));
+    $vocabulary->save();
+  }
     else {
-      // Vocabulary Already exist
-      $query = \Drupal::entityQuery('taxonomy_term');
-      $query->condition('vid', $vid);
-      $tids = $query->execute();
-    }
+    // Vocabulary Already exist
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', $vid);
+    $tids = $query->execute();
+  }
 
-    // Engadir campo parroquia 
+  // Acceso
+
+  $vid = "acceso";
+  $name = "acceso";
+  $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
+  
+  if (!isset($vocabularies[$vid])) {
+    $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
+            'vid' => $vid,
+            'description' => 'Vocabulario taxonómico que identifica o tipo de acceso ó elemento',
+            'name' => $name,
+    ));
+    $vocabulary->save();
+  }
+    else {
+    // Vocabulary Already exist
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', $vid);
+    $tids = $query->execute();
+  }
+
+  //
+  // Entity_reference
+  // 
+
+  // Campo parroquia 
     \Drupal\field\Entity\FieldStorageConfig::create(array(
-      'field_name' => 'field_parroquia',
+      'field_name' => 'field_parroquia_elemento',
       'entity_type' => 'node',
       'type' => 'entity_reference',
       'settings' => array(
@@ -132,7 +219,7 @@ function aeira_install() {
     ))->save();
   
     \Drupal\field\Entity\FieldConfig::create(array(
-      'field_name' => 'field_parroquia',
+      'field_name' => 'field_parroquia_elemento',
       'entity_type' => 'node',
       'bundle' => 'elemento',
       'label' => 'Parroquia',
@@ -147,12 +234,39 @@ function aeira_install() {
     ))->save();
   
     $entityDisplayRepository = \Drupal::service('entity_display.repository');
-    $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_parroquia', ['type' => 'entity_reference_autocomplete_tags']);
+    $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_parroquia_elemento', ['type' => 'entity_reference_autocomplete_tags']);
     $form_display->save();
 
+  // Campo acceso
+    \Drupal\field\Entity\FieldStorageConfig::create(array(
+      'field_name' => 'field_acceso_elemento',
+      'entity_type' => 'node',
+      'type' => 'entity_reference',
+      'settings' => array(
+        'target_type' => 'taxonomy_term',
+      ),
+    ))->save();
 
+    \Drupal\field\Entity\FieldConfig::create(array(
+      'field_name' => 'field_acceso_elemento',
+      'entity_type' => 'node',
+      'bundle' => 'elemento',
+      'label' => 'Acceso',
+      'settings' => array(
+        'handler_settings' => array(
+          'target_bundles' => array(
+            'acceso' => 'acceso',
+          ),
+          'auto_create' => TRUE,
+        ),
+      ),
+    ))->save();
 
-    // Engadir campo Concello a Parroquia
+    $entityDisplayRepository = \Drupal::service('entity_display.repository');
+    $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_acceso_elemento', ['type' => 'entity_reference_autocomplete_tags']);
+    $form_display->save();
+
+    //  Concello a Parroquia
         \Drupal\field\Entity\FieldStorageConfig::create(array(
           'field_name' => 'field_parroquia_concello',
           'entity_type' => 'taxonomy_term',
@@ -180,5 +294,12 @@ function aeira_install() {
         $entityDisplayRepository = \Drupal::service('entity_display.repository');
         $form_display = $entityDisplayRepository->getFormDisplay('taxonomy_term', 'parroquia')->setComponent('field_parroquia_concello', ['type' => 'entity_reference_autocomplete_tags']);
         $form_display->save();    
+
+  //
+  // Theme
+  //
+  \Drupal::service('theme_installer')->install(['claro']);
+  \Drupal::configFactory()->getEditable('system.theme')->set('default', 'claro')->save();
+
 
 }   
