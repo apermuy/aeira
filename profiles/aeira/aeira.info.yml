@@ -41,6 +41,9 @@ install:
   - path
   - taxonomy
   - dblog
+  - media
+  - menu_ui
+  - language
   - search
   - shortcut
   - toolbar

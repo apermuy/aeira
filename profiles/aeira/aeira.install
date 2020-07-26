@@ -23,6 +23,7 @@ function aeira_install() {
   $type = \Drupal\node\Entity\NodeType::create([
     'type' => 'elemento',
     'name' => 'Elemento',
+    'description' => 'Tipo de contido para crear elementos que se amosarán no catálogo',
   ]);
   
   $type->save();
@@ -41,6 +42,8 @@ function aeira_install() {
   $type = \Drupal\node\Entity\NodeType::create([
     'type' => 'paxina',
     'name' => 'Páxina',
+    'description' => 'Tipo de contido para crear páxinas básicas',
+
   ]);
   
   $type->save();
@@ -58,6 +61,7 @@ function aeira_install() {
   //
   // Campos
   //
+
   // Lugar
   \Drupal\field\Entity\FieldStorageConfig::create(array(
     'field_name' => 'field_lugar_elemento',
@@ -115,6 +119,50 @@ function aeira_install() {
   $entityDisplayRepository = \Drupal::service('entity_display.repository');
   $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_descricion_elemento', ['type' => 'text_textarea']);
   $form_display->save();
+
+  //
+  // Imaxe
+  //
+
+  \Drupal\field\Entity\FieldStorageConfig::create([
+    'field_name' => 'field_imaxe_elemento',
+    'entity_type' => 'node',
+    'type' => 'image',
+    'translatable' => '0',
+  ])->save();
+  \Drupal\field\Entity\FieldConfig::create([
+    'label' => 'Imaxe',
+    'description' => 'Imaxe principal do elemento',
+    'field_name' => 'field_imaxe_elemento',
+    'entity_type' => 'node',
+    'bundle' => 'elemento',
+    'required' => 0,
+  ])->save();
+
+  $entityDisplayRepository = \Drupal::service('entity_display.repository');
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_imaxe_elemento', ['type' => 'image_image']);
+  $form_display->save();
+
+    // Contido páxina
+    \Drupal\field\Entity\FieldStorageConfig::create(array(
+      'field_name' => 'field_contido_paxina',
+      'entity_type' => 'node',
+      'type' => 'text_long',
+      'format' => 'full_html',
+      'cardinality' => -1,
+    ))->save();
+  
+    \Drupal\field\Entity\FieldConfig::create([
+      'field_name' => 'field_contido_paxina',
+      'entity_type' => 'node',
+      'bundle' => 'paxina',
+      'label' => 'Contido',
+    ])->save();
+  
+    $entityDisplayRepository = \Drupal::service('entity_display.repository');
+    $form_display = $entityDisplayRepository->getFormDisplay('node', 'paxina')->setComponent('field_contido_paxina', ['type' => 'text_textarea']);
+    $form_display->save();
+
   // 
   // Vocabularios taxonómicos
   //
@@ -177,7 +225,7 @@ function aeira_install() {
     $vocabulary->save();
   }
     else {
-    // Vocabulary Already exist
+    // Vocabulary Already exist 
     $query = \Drupal::entityQuery('taxonomy_term');
     $query->condition('vid', $vid);
     $tids = $query->execute();
@@ -296,10 +344,58 @@ function aeira_install() {
         $form_display->save();    
 
   //
+  // Menu
+  // 
+  $my_menu = \Drupal::entityTypeManager()->getStorage('menu_link_content')
+    ->loadByProperties(['menu_name' => 'main']);
+  foreach ($my_menu as $menu_item) {
+    $parent_id = $menu_item->getParentId();
+    if (!empty($parent_id)) {
+      $top_level = $parent_id;
+      break;
+    }
+  }
+  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+    'title' => 'My menu link title',
+    'link' => ['uri' => 'internal:/my/path'],
+    'menu_name' => 'main',
+    'parent' => $top_level,
+    'expanded' => TRUE,
+    'weight' => 0,
+  ]);
+  $menu_link->save();
+  
+  $node = \Drupal\node\Entity\Node::create([
+    'type' => 'paxina',
+    'uid' => 1,
+    'revision' => 0,
+    'status' => TRUE,
+    'promote' => 0,
+    'created' => time(),
+    'langcode' => 'es',
+    'title' => 'My Page Title',
+  ]);
+ 
+  $node->set('field_contido_paxina', [
+    'value' => '<h1>Welcome to My Page!</h1>',
+    'format' => 'basic_html'
+  ]);
+ 
+  $node->save();
+ 
+  $source = '/node/' . $node->get('nid')->value;
+  $path_alias = \Drupal\path_alias\Entity\PathAlias::create([
+    'path' => $source,
+    'alias' => '/my/path',
+  ]);
+  
+  $path_alias->save();
+
+
+  //
   // Theme
   //
   \Drupal::service('theme_installer')->install(['claro']);
   \Drupal::configFactory()->getEditable('system.theme')->set('default', 'claro')->save();
-
 
 }   
