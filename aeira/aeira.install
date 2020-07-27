@@ -64,7 +64,7 @@ function aeira_install() {
   //
   // Campos
   //
-  // Lugar
+  // Xeolocalizacion
   \Drupal\field\Entity\FieldStorageConfig::create(array(
     'field_name' => 'field_xeolocalizacion_elemento',
     'entity_type' => 'node',
@@ -80,9 +80,9 @@ function aeira_install() {
   ])->save();
 
   $entityDisplayRepository = \Drupal::service('entity_display.repository');
-  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_xeolocalizacion_elemento', ['type' => 'geocoder']);
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_xeolocalizacion_elemento', ['type' => 'geofield_latlon']);
   $form_display->save();
-  
+
   // Lugar
   \Drupal\field\Entity\FieldStorageConfig::create(array(
     'field_name' => 'field_lugar_elemento',
