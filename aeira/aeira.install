@@ -16,6 +16,9 @@ function aeira_install() {
   include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
   standard_install();
 
+  // Habilitar módulos contrib
+  \Drupal::service("module_installer")->install(["geofield"]);
+
   // 
   // Tipos de contido
   // 
