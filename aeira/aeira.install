@@ -19,6 +19,8 @@ function aeira_install() {
   // Habilitar módulos contrib
   \Drupal::service("module_installer")->install(["geofield"]);
   \Drupal::service("module_installer")->install(["leaflet"]);
+  \Drupal::service("module_installer")->install(["token"]);
+  \Drupal::service("module_installer")->install(["pathauto"]);
 
   // 
   // Tipos de contido
