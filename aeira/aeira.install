@@ -380,8 +380,8 @@ function aeira_install() {
     }
   }
   $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
-    'title' => 'My menu link title',
-    'link' => ['uri' => 'internal:/my/path'],
+    'title' => 'Elementos',
+    'link' => ['uri' => 'internal:/elementos'],
     'menu_name' => 'main',
     'parent' => $top_level,
     'expanded' => TRUE,
