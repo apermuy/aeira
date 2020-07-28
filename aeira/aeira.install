@@ -439,7 +439,7 @@ function aeira_install() {
   $storage = new \Drupal\Component\PhpStorage\FileStorage($config_path);
   \Drupal::entityTypeManager()
     ->getStorage('view')
-    ->create($storage->read('views.view.elementos'))
+    ->create($storage->load('views.view.elementos'))
     ->save();
 
   //
