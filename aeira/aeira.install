@@ -436,7 +436,7 @@ function aeira_install() {
 
   // Views
   $config_path = 'config/optional';
-  $storage = new FileStorage($config_path);
+  $storage = new \Drupal\Component\PhpStorage\FileStorage($config_path);
   \Drupal::entityTypeManager()
     ->getStorage('view')
     ->create($storage
