@@ -434,6 +434,15 @@ function aeira_install() {
   ]);
   $block->save();
 
+  // Views
+  $config_path = 'config/optional';
+  $storage = new FileStorage($config_path);
+  \Drupal::entityTypeManager()
+    ->getStorage('view')
+    ->create($storage
+    ->read('views.view.elementos'))
+    ->save();
+
   //
   // Theme
   //
