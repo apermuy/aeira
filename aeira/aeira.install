@@ -434,6 +434,11 @@ function aeira_install() {
   ]);
   $block->save();
 
+  // Testing view
+  $view = entity_load('view', 'elementos');
+  $view->setDescription('The force will be with you, always.');
+  $view->save();
+
   //
   // Theme
   //
