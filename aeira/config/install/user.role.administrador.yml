@@ -1,0 +1,5 @@
+id: administrador
+label: Administrador
+weight: 2
+langcode: es
+is_admin: true
