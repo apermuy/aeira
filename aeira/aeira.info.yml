@@ -43,6 +43,8 @@ install:
   - dblog
   - media
   - menu_ui
+  - node
+  - user
   - language
   - search
   - shortcut
@@ -54,13 +56,14 @@ install:
   - views_ui
   - editor
   - ckeditor
+  - block
 
 # Required modules
 # Note that any dependencies of the modules listed here will be installed automatically.
 dependencies:
-  - node
-  - block
-  - views
+  - drupal:node
+  - drupal:views
+
 
 # List any themes that should be installed as part of the profile installation.
 # Note that this will not set any theme as the default theme.

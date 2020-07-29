@@ -435,12 +435,14 @@ function aeira_install() {
   $block->save();
 
   // Views
-  $config_path = array('directory' => 'config/optional');
-  $storage = new \Drupal\Component\PhpStorage\FileStorage($config_path);
-  \Drupal::entityTypeManager()
-    ->getStorage('view')
-    ->create($storage->load('views.view.elementos'))
-    ->save();
+  
+  // Importar vista /elementos
+  $name = 'views.view.elementos';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+
 
   //
   // Theme
