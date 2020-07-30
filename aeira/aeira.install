@@ -463,10 +463,31 @@ function aeira_install() {
   ]);
   $block->save();
 
+
+  //
+  // Importar configuración
+  //
+
   // Views
   
   // Importar vista /elementos
   $name = 'views.view.elementos';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+
+  // Importar vista elementos relacionados
+  $name = 'views.view.elementos_relacionados';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+
+  // Bloques
+
+  // Importar bloque vista elementos relacionados
+  $name = 'block.block.views_block__elementos_relacionados_block_1';
   $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
   $storage = new \Drupal\Core\Config\FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
@@ -488,6 +509,9 @@ function aeira_install() {
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
  
+  // TODO - Importar display node elementos relacionados
+  
+
   //
   // Theme
   //
