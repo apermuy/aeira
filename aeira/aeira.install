@@ -167,7 +167,7 @@ function aeira_install() {
   $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_imaxe_elemento', ['type' => 'image_image']);
   $form_display->save();
 
-    // Contido páxina
+  // Contido páxina
     \Drupal\field\Entity\FieldStorageConfig::create(array(
       'field_name' => 'field_contido_paxina',
       'entity_type' => 'node',
@@ -338,7 +338,36 @@ function aeira_install() {
     $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_acceso_elemento', ['type' => 'entity_reference_autocomplete_tags']);
     $form_display->save();
 
-    //  Concello a Parroquia
+  // Campo tipo
+  \Drupal\field\Entity\FieldStorageConfig::create(array(
+    'field_name' => 'field_tipo_elemento',
+    'entity_type' => 'node',
+    'type' => 'entity_reference',
+    'settings' => array(
+      'target_type' => 'taxonomy_term',
+    ),
+  ))->save();
+
+  \Drupal\field\Entity\FieldConfig::create(array(
+    'field_name' => 'field_tipo_elemento',
+    'entity_type' => 'node',
+    'bundle' => 'elemento',
+    'label' => 'Tipo de elemento',
+    'settings' => array(
+      'handler_settings' => array(
+        'target_bundles' => array(
+          'tipo' => 'tipo',
+        ),
+        'auto_create' => TRUE,
+      ),
+    ),
+  ))->save();
+
+  $entityDisplayRepository = \Drupal::service('entity_display.repository');
+  $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_tipo_elemento', ['type' => 'entity_reference_autocomplete_tags']);
+  $form_display->save();
+
+   // Concello a Parroquia
         \Drupal\field\Entity\FieldStorageConfig::create(array(
           'field_name' => 'field_parroquia_concello',
           'entity_type' => 'taxonomy_term',
@@ -443,7 +472,22 @@ function aeira_install() {
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
 
+  //Displays
 
+  // Importar display node elementos full
+  $name = 'core.entity_view_display.node.elemento.full';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+
+  // Importar display node elementos resumen
+  $name = 'core.entity_view_display.node.elemento.teaser';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+ 
   //
   // Theme
   //

@@ -1,0 +1,160 @@
+uuid: null
+langcode: es
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.elemento.field_acceso_elemento
+    - field.field.node.elemento.field_codigo_elemento
+    - field.field.node.elemento.field_descricion_elemento
+    - field.field.node.elemento.field_imaxe_elemento
+    - field.field.node.elemento.field_lugar_elemento
+    - field.field.node.elemento.field_parroquia_elemento
+    - field.field.node.elemento.field_tipo_elemento
+    - field.field.node.elemento.field_xeolocalizacion_elemento
+    - node.type.elemento
+  module:
+    - image
+    - leaflet
+    - text
+    - user
+id: node.elemento.full
+targetEntityType: node
+bundle: elemento
+mode: full
+content:
+  field_acceso_elemento:
+    type: entity_reference_label
+    weight: 2
+    region: content
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_codigo_elemento:
+    type: text_default
+    weight: 1
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_descricion_elemento:
+    type: text_default
+    weight: 5
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_imaxe_elemento:
+    type: image
+    weight: 6
+    region: content
+    label: inline
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+  field_lugar_elemento:
+    type: text_default
+    weight: 4
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_parroquia_elemento:
+    type: entity_reference_label
+    weight: 7
+    region: content
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_tipo_elemento:
+    type: entity_reference_label
+    weight: 8
+    region: content
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_xeolocalizacion_elemento:
+    type: leaflet_formatter_default
+    weight: 9
+    region: content
+    label: hidden
+    settings:
+      multiple_map: 0
+      leaflet_map: 'OSM Mapnik'
+      height: 400
+      height_unit: px
+      hide_empty_map: 0
+      disable_wheel: 0
+      fullscreen_control: 1
+      gesture_handling: 0
+      reset_map:
+        control: 0
+        position: topright
+      popup: false
+      popup_content: ''
+      map_position:
+        force: 0
+        center:
+          lat: 0
+          lon: 0
+        zoom: 12
+        minZoom: 1
+        maxZoom: 18
+        zoomFiner: 0
+      icon:
+        iconType: marker
+        iconUrl: ''
+        iconSize:
+          x: null
+          'y': null
+        iconAnchor:
+          x: null
+          'y': null
+        shadowUrl: ''
+        shadowSize:
+          x: null
+          'y': null
+        shadowAnchor:
+          x: null
+          'y': null
+        popupAnchor:
+          x: null
+          'y': null
+        html: '<div></div>'
+        html_class: leaflet-map-divicon
+        circle_marker_options: '{"radius": 100, "color": "red", "fillColor": "#f03", "fillOpacity": 0.5}'
+      leaflet_markercluster:
+        control: 0
+        options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
+      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
+      geocoder:
+        control: 0
+        settings:
+          position: topright
+          input_size: 25
+          providers: {  }
+          min_terms: 4
+          delay: 800
+          zoom: 16
+          popup: 0
+          options: ''
+    third_party_settings: {  }
+  langcode:
+    type: language
+    weight: 3
+    region: content
+    label: inline
+    settings:
+      link_to_entity: false
+      native_language: false
+    third_party_settings: {  }
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
