@@ -1,0 +1,21 @@
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: paxinas
+label: Paxinas
+type: 'canonical_entities:node'
+pattern: 'contido/[node:title]'
+selection_criteria:
+  c4e2baec-bb25-4fb2-a373-b6efbe149a2c:
+    id: node_type
+    bundles:
+      paxina: paxina
+    negate: false
+    context_mapping:
+      node: node
+    uuid: c4e2baec-bb25-4fb2-a373-b6efbe149a2c
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -425,12 +425,12 @@ function aeira_install() {
     'status' => TRUE,
     'promote' => 0,
     'created' => time(),
-    'langcode' => 'es',
-    'title' => 'My Page Title',
+    'langcode' => 'gl',
+    'title' => 'O proxecto',
   ]);
  
   $node->set('field_contido_paxina', [
-    'value' => '<h1>Welcome to My Page!</h1>',
+    'value' => file_get_contents('config/content/proxecto.html'),
     'format' => 'basic_html'
   ]);
  
@@ -439,7 +439,7 @@ function aeira_install() {
   $source = '/node/' . $node->get('nid')->value;
   $path_alias = \Drupal\path_alias\Entity\PathAlias::create([
     'path' => $source,
-    'alias' => '/my/path',
+    'alias' => '/contido/proxecto',
   ]);
   
   $path_alias->save();
@@ -468,6 +468,29 @@ function aeira_install() {
   // Importar configuración
   //
 
+  //Displays
+
+  // Importar display node elementos full
+  $name = 'core.entity_view_display.node.elemento.full';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+
+  // Importar display node elementos resumen
+  $name = 'core.entity_view_display.node.elemento.teaser';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+ 
+  // Importar display node elementos tarxeta
+  $tarxeta = 'core.entity_view_display.node.elemento.tarxeta';
+  $config_path1 = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage1 = new \Drupal\Core\Config\FileStorage($config_path1);
+  $config_storage1 = \Drupal::service('config.storage');
+  $config_storage1->write($tarxeta, $storage1->read($tarxeta));
+  
   // Views
   
   // Importar vista /elementos
@@ -487,30 +510,27 @@ function aeira_install() {
   // Bloques
 
   // Importar bloque vista elementos relacionados
-  $name = 'block.block.views_block__elementos_relacionados_block_1';
+  $name = 'block.block.views_block__elementos_relacionados';
   $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
   $storage = new \Drupal\Core\Config\FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
 
-  //Displays
+  // Pathauto
 
-  // Importar display node elementos full
-  $name = 'core.entity_view_display.node.elemento.full';
+  // Importar patron URL para content type elementos
+  $name = 'pathauto.pattern.elemento';
   $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
   $storage = new \Drupal\Core\Config\FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
 
-  // Importar display node elementos resumen
-  $name = 'core.entity_view_display.node.elemento.teaser';
+  // Importar patron URL para content type paxina
+  $name = 'pathauto.pattern.paxinas';
   $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
   $storage = new \Drupal\Core\Config\FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
- 
-  // TODO - Importar display node elementos relacionados
-  
 
   //
   // Theme
@@ -518,4 +538,4 @@ function aeira_install() {
   \Drupal::service('theme_installer')->install(['claro']);
   \Drupal::configFactory()->getEditable('system.theme')->set('default', 'claro')->save();
 
-}   
+} 

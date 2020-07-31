@@ -1,0 +1,42 @@
+langcode: es
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.tarxeta
+    - field.field.node.elemento.field_acceso_elemento
+    - field.field.node.elemento.field_codigo_elemento
+    - field.field.node.elemento.field_descricion_elemento
+    - field.field.node.elemento.field_imaxe_elemento
+    - field.field.node.elemento.field_lugar_elemento
+    - field.field.node.elemento.field_parroquia_elemento
+    - field.field.node.elemento.field_tipo_elemento
+    - field.field.node.elemento.field_xeolocalizacion_elemento
+    - image.style.medium
+    - node.type.elemento
+  module:
+    - image
+    - user
+id: node.elemento.tarxeta
+targetEntityType: node
+bundle: elemento
+mode: tarxeta
+content:
+  field_imaxe_elemento:
+    type: image
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: content
+    third_party_settings: {  }
+hidden:
+  field_acceso_elemento: true
+  field_codigo_elemento: true
+  field_descricion_elemento: true
+  field_lugar_elemento: true
+  field_parroquia_elemento: true
+  field_tipo_elemento: true
+  field_xeolocalizacion_elemento: true
+  langcode: true
+  links: true

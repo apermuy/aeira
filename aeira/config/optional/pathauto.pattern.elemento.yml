@@ -1,0 +1,21 @@
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: elemento
+label: Elemento
+type: 'canonical_entities:node'
+pattern: 'elemento/[node:field_tipo_elemento]/[node:title]'
+selection_criteria:
+  0411d57a-2045-4f3d-b0c6-ea69bc4d2d0f:
+    id: node_type
+    bundles:
+      elemento: elemento
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 0411d57a-2045-4f3d-b0c6-ea69bc4d2d0f
+selection_logic: and
+weight: -5
+relationships: {  }
