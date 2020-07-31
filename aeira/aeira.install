@@ -64,9 +64,19 @@ function aeira_install() {
     ->getStorage('entity_view_display')
     ->create($values);
 
+  // Formato de texto full_html
+  
+  $name = 'filter.format.full';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
+  
+
   //
   // Campos
   //
+
   // Xeolocalizacion
   \Drupal\field\Entity\FieldStorageConfig::create(array(
     'field_name' => 'field_xeolocalizacion_elemento',
@@ -154,6 +164,7 @@ function aeira_install() {
     'type' => 'image',
     'translatable' => '0',
   ])->save();
+
   \Drupal\field\Entity\FieldConfig::create([
     'label' => 'Imaxe',
     'description' => 'Imaxe principal do elemento',
@@ -171,8 +182,8 @@ function aeira_install() {
     \Drupal\field\Entity\FieldStorageConfig::create(array(
       'field_name' => 'field_contido_paxina',
       'entity_type' => 'node',
-      'type' => 'text_long',
-      'format' => 'full_html',
+      'type' => 'text_with_summary',
+      'format' => 'full',
       'cardinality' => -1,
     ))->save();
   
@@ -396,54 +407,6 @@ function aeira_install() {
         $form_display = $entityDisplayRepository->getFormDisplay('taxonomy_term', 'parroquia')->setComponent('field_parroquia_concello', ['type' => 'entity_reference_autocomplete_tags']);
         $form_display->save();    
 
-  //
-  // Menu
-  // 
-  $my_menu = \Drupal::entityTypeManager()->getStorage('menu_link_content')
-    ->loadByProperties(['menu_name' => 'main']);
-  foreach ($my_menu as $menu_item) {
-    $parent_id = $menu_item->getParentId();
-    if (!empty($parent_id)) {
-      $top_level = $parent_id;
-      break;
-    }
-  }
-  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
-    'title' => 'Elementos',
-    'link' => ['uri' => 'internal:/elementos'],
-    'menu_name' => 'main',
-    'parent' => $top_level,
-    'expanded' => TRUE,
-    'weight' => 0,
-  ]);
-  $menu_link->save();
-  
-  $node = \Drupal\node\Entity\Node::create([
-    'type' => 'paxina',
-    'uid' => 1,
-    'revision' => 0,
-    'status' => TRUE,
-    'promote' => 0,
-    'created' => time(),
-    'langcode' => 'gl',
-    'title' => 'O proxecto',
-  ]);
- 
-  $node->set('field_contido_paxina', [
-    'value' => file_get_contents('config/content/proxecto.html'),
-    'format' => 'basic_html'
-  ]);
- 
-  $node->save();
- 
-  $source = '/node/' . $node->get('nid')->value;
-  $path_alias = \Drupal\path_alias\Entity\PathAlias::create([
-    'path' => $source,
-    'alias' => '/contido/proxecto',
-  ]);
-  
-  $path_alias->save();
-
   // Formulario de contacto
   $feedback_form = \Drupal\contact\Entity\ContactForm::create([
     'id' => 'contacto',
@@ -490,6 +453,13 @@ function aeira_install() {
   $storage1 = new \Drupal\Core\Config\FileStorage($config_path1);
   $config_storage1 = \Drupal::service('config.storage');
   $config_storage1->write($tarxeta, $storage1->read($tarxeta));
+
+  // Importar display node paxina full
+  $tarxeta = 'core.entity_view_display.node.paxina.full';
+  $config_path1 = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage1 = new \Drupal\Core\Config\FileStorage($config_path1);
+  $config_storage1 = \Drupal::service('config.storage');
+  $config_storage1->write($tarxeta, $storage1->read($tarxeta));
   
   // Views
   
@@ -507,7 +477,9 @@ function aeira_install() {
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
 
+  //
   // Bloques
+  //
 
   // Importar bloque vista elementos relacionados
   $name = 'block.block.views_block__elementos_relacionados';
@@ -516,7 +488,9 @@ function aeira_install() {
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
 
+  //
   // Pathauto
+  //
 
   // Importar patron URL para content type elementos
   $name = 'pathauto.pattern.elemento';
@@ -532,9 +506,35 @@ function aeira_install() {
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
 
+
+  //
+  // Menu
+  //
+
+  $menu = \Drupal::entityTypeManager()->getStorage('menu_link_content')
+    ->loadByProperties(['menu_name' => 'main']);
+  foreach ($menu as $menu_item) {
+    $parent_id = $menu_item->getParentId();
+    if (!empty($parent_id)) {
+      $top_level = $parent_id;
+      break;
+    }
+  }
+  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+    'title' => 'Elementos',
+    'link' => ['uri' => 'internal:/elementos'],
+    'menu_name' => 'main',
+    'parent' => $top_level,
+    'expanded' => TRUE,
+    'weight' => 0,
+  ]);
+
+  $menu_link->save();
+  
   //
   // Theme
   //
+
   \Drupal::service('theme_installer')->install(['claro']);
   \Drupal::configFactory()->getEditable('system.theme')->set('default', 'claro')->save();
 

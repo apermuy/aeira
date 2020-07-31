@@ -1,0 +1,25 @@
+langcode: es
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.paxina.field_contido_paxina
+    - node.type.paxina
+  module:
+    - text
+    - user
+id: node.paxina.full
+targetEntityType: node
+bundle: paxina
+mode: full
+content:
+  field_contido_paxina:
+    type: text_default
+    weight: 0
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  links: true
