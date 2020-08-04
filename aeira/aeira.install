@@ -72,6 +72,13 @@ function aeira_install() {
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write($name, $storage->read($name));
   
+  // Editor de texto full
+
+  $name = 'editor.editor.full';
+  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write($name, $storage->read($name));
 
   //
   // Campos
@@ -530,7 +537,7 @@ function aeira_install() {
   ]);
 
   $menu_link->save();
-  
+
   //
   // Theme
   //
