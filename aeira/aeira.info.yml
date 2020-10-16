@@ -22,16 +22,14 @@ distribution:
   #
   # install:
   #   theme: my_theme
-  langcode: es
+  langcode: gl
 
 # Modules to install to support the profile.
 install:
-  - history
   - block_content
   - breakpoint
   - color
   - config
-  - comment
   - contextual
   - contact
   - quickedit
