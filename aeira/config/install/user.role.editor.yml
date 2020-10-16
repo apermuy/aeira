@@ -1,0 +1,46 @@
+langcode: es
+status: true
+dependencies: {  }
+id: editor
+label: Editor/a
+weight: 3
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access in-place editing'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'administer taxonomy'
+  - 'create elemento content'
+  - 'create paxina content'
+  - 'create terms in acceso'
+  - 'create terms in concello'
+  - 'create terms in parroquia'
+  - 'create terms in tipo'
+  - 'delete any elemento content'
+  - 'delete any paxina content'
+  - 'delete elemento revisions'
+  - 'delete own elemento content'
+  - 'delete own paxina content'
+  - 'delete paxina revisions'
+  - 'delete terms in acceso'
+  - 'delete terms in concello'
+  - 'delete terms in parroquia'
+  - 'delete terms in tipo'
+  - 'edit any elemento content'
+  - 'edit any paxina content'
+  - 'edit own elemento content'
+  - 'edit own paxina content'
+  - 'edit terms in acceso'
+  - 'edit terms in concello'
+  - 'edit terms in parroquia'
+  - 'edit terms in tipo'
+  - 'revert elemento revisions'
+  - 'revert paxina revisions'
+  - 'view elemento revisions'
+  - 'view own unpublished content'
+  - 'view paxina revisions'
+  - 'view the administration theme'
