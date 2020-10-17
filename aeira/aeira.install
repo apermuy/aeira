@@ -21,6 +21,7 @@ function aeira_install() {
   \Drupal::service("module_installer")->install(["leaflet"]);
   \Drupal::service("module_installer")->install(["token"]);
   \Drupal::service("module_installer")->install(["pathauto"]);
+  \Drupal::service("module_installer")->install(["restui"]);
 
   // 
   // Tipos de contido
