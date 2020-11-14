@@ -23,6 +23,8 @@ function aeira_install() {
   \Drupal::service("module_installer")->install(["pathauto"]);
   \Drupal::service("module_installer")->install(["restui"]);
 
+  // Habilitar módulos custom
+  \Drupal::service("module_installer")->install(["aeiraresources"]);
   // 
   // Tipos de contido
   // 
@@ -544,6 +546,8 @@ function aeira_install() {
   //
 
   \Drupal::service('theme_installer')->install(['claro']);
-  \Drupal::configFactory()->getEditable('system.theme')->set('default', 'claro')->save();
+  \Drupal::service('theme_installer')->install(['aeira']);
+  \Drupal::configFactory()->getEditable('system.theme')->set('default', 'aeira')->save();
+  \Drupal::configFactory()->getEditable('system.theme')->set('admin', 'claro')->save();
 
 } 
