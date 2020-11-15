@@ -1,5 +1,5 @@
 id: administrador
 label: Administrador/a
 weight: 2
-langcode: es
+langcode: gl
 is_admin: true

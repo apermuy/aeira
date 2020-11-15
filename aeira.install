@@ -1,4 +1,12 @@
 <?php
+
+use \Drupal\node\Entity\Node;
+use \Drupal\taxonomy\Entity\Term;
+use \Drupal\Core\Language\Language;
+use \Drupal\Core\Controller\ControllerBase;
+use \Symfony\Component\DependencyInjection\ContainerInterface;
+use \Drupal\Core\Extension\ModuleHandlerInterface;
+
 /**
  * @file
  * Install, update and uninstall functions for aeira install profile.
@@ -25,6 +33,7 @@ function aeira_install() {
 
   // Habilitar módulos custom
   \Drupal::service("module_installer")->install(["aeiraresources"]);
+
   // 
   // Tipos de contido
   // 
@@ -92,7 +101,7 @@ function aeira_install() {
     'field_name' => 'field_xeolocalizacion_elemento',
     'entity_type' => 'node',
     'type' => 'geofield',
-    'cardinality' => -1,
+    'cardinality' => 1,
   ))->save();
 
   \Drupal\field\Entity\FieldConfig::create([
@@ -111,7 +120,7 @@ function aeira_install() {
     'field_name' => 'field_lugar_elemento',
     'entity_type' => 'node',
     'type' => 'text',
-    'cardinality' => -1,
+    'cardinality' => 1,
   ))->save();
 
   \Drupal\field\Entity\FieldConfig::create([
@@ -130,7 +139,7 @@ function aeira_install() {
     'field_name' => 'field_codigo_elemento',
     'entity_type' => 'node',
     'type' => 'text',
-    'cardinality' => -1,
+    'cardinality' => 1,
   ))->save();
 
   \Drupal\field\Entity\FieldConfig::create([
@@ -150,7 +159,7 @@ function aeira_install() {
     'entity_type' => 'node',
     'type' => 'text_long',
     'format' => 'full_html',
-    'cardinality' => -1,
+    'cardinality' => 1,
   ))->save();
 
   \Drupal\field\Entity\FieldConfig::create([
@@ -194,7 +203,7 @@ function aeira_install() {
       'entity_type' => 'node',
       'type' => 'text_with_summary',
       'format' => 'full',
-      'cardinality' => -1,
+      'cardinality' => 1,
     ))->save();
   
     \Drupal\field\Entity\FieldConfig::create([
@@ -221,7 +230,7 @@ function aeira_install() {
   if (!isset($vocabularies[$vid])) {
     $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
           'vid' => $vid,
-          'description' => 'Vocabulario taxonómico que contiene distintos los distintos tipos de elementos del proyecto',
+          'description' => 'Vocabulario taxonómico que almacena distintos tipos de elemento do proxecto',
           'name' => $name,
     ));
     $vocabulary->save();
@@ -233,6 +242,17 @@ function aeira_install() {
     $tids = $query->execute();
   }
 
+  // Engadir termos ó vocabulario
+  $vocabularioTipo = 'tipo';
+  $categoriasTipo = ['Igrexa', 'Pazo', 'Hórreo', 'Mirador'];
+  foreach ($categoriasTipo as $terminoTipo) {
+    $termTipo = Term::create(array(
+      'parent' => array(),
+      'name' => $terminoTipo,
+      'vid' => $vocabularioTipo,
+    ))->save();
+  }
+
   // Parroquia
 
   $vid = "parroquia";
@@ -242,7 +262,7 @@ function aeira_install() {
   if (!isset($vocabularies[$vid])) {
     $vocabulary = \Drupal\taxonomy\Entity\Vocabulary::create(array(
           'vid' => $vid,
-          'description' => 'Vocabulario taxonómico que identifica á parroquia',
+          'description' => 'Vocabulario taxonómico que identifica á Parroquia',
           'name' => $name,
     ));
     $vocabulary->save();
@@ -270,16 +290,26 @@ function aeira_install() {
     $vocabulary->save();
   }
     else {
-    // Vocabulary Already exist 
-    $query = \Drupal::entityQuery('taxonomy_term');
-    $query->condition('vid', $vid);
-    $tids = $query->execute();
+      $query = \Drupal::entityQuery('taxonomy_term');
+      $query->condition('vid', $vid);
+      $tids = $query->execute();
+  }
+
+  // Engadir termos ó vocabulario Concello
+  $vocabularioConcello = 'concello';
+  $categoriasConcello = ['Ares', 'Fene', 'Ferrol', 'Mugardos', 'Narón', 'Valdoviño'];
+  foreach ($categoriasConcello as $termoConcello) {
+    $termosConcello = Term::create(array(
+      'parent' => array(),
+      'name' => $termoConcello,
+      'vid' => $vocabularioConcello,
+     ))->save();
   }
 
   // Acceso
 
   $vid = "acceso";
-  $name = "acceso";
+  $name = "Acceso";
   $vocabularies = \Drupal\taxonomy\Entity\Vocabulary::loadMultiple();
   
   if (!isset($vocabularies[$vid])) {
@@ -291,11 +321,21 @@ function aeira_install() {
     $vocabulary->save();
   }
     else {
-    // Vocabulary Already exist
-    $query = \Drupal::entityQuery('taxonomy_term');
-    $query->condition('vid', $vid);
-    $tids = $query->execute();
+      $query = \Drupal::entityQuery('taxonomy_term');
+      $query->condition('vid', $vid);
+      $tids = $query->execute();
   }
+
+    // Engadir termos ó vocabulario acceso
+    $vocabularioAcceso = 'acceso';
+    $categoriasAcceso = ['Bo', 'Moi bo', 'Malo', 'Sen clasificar'];
+    foreach ($categoriasAcceso as $termoAcceso) {
+      $termosAcceso = Term::create(array(
+        'parent' => array(),
+        'name' => $termoAcceso,
+        'vid' => $vocabularioAcceso,
+      ))->save();
+    }
 
   //
   // Entity_reference
@@ -384,6 +424,7 @@ function aeira_install() {
     ),
   ))->save();
 
+
   $entityDisplayRepository = \Drupal::service('entity_display.repository');
   $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_tipo_elemento', ['type' => 'entity_reference_autocomplete_tags']);
   $form_display->save();
@@ -421,21 +462,13 @@ function aeira_install() {
   $feedback_form = \Drupal\contact\Entity\ContactForm::create([
     'id' => 'contacto',
     'label' => 'Contacto',
-    'recipients' => ['somebody@example.com'],
+    'recipients' => ['usuaria@exemplo.com'],
     'reply' => '',
-    'redirect' => '/my/path',
+    'canonical' => 'contactar',
+    'redirect' => '',
     'weight' => 0,
     ]);
   $feedback_form->save();
-
-  // Blocks
-  $block = \Drupal\block_content\Entity\BlockContent::create([
-    'info' => 'block 1',
-    'type' => 'basic',
-    'langcode' => 'es',
-  ]);
-  $block->save();
-
 
   //
   // Importar configuración
@@ -518,9 +551,38 @@ function aeira_install() {
 
 
   //
+  // Importar contenido demo elementos
+  //
+  $demoFilePath = drupal_get_path('profile', 'aeira') . '/content/elementos_demo.json';
+  $arquivoDemoElementos = file_get_contents($demoFilePath);
+  $demoElementos = json_decode($arquivoDemoElementos, true);
+
+  foreach ($demoElementos as $elementoImportar) {
+
+    $node = Node::create(['type' => 'elemento']);
+    $node->set('title',$elementoImportar['title']);
+    $node->set('uid', 1);
+    $node->set('langcode', 'gl');
+    $node->status = 1;
+
+   
+
+    $node->enforceIsNew();
+    $node->save();
+
+    $nid = $node->id();
+    $node1 = Node::load($nid);
+    $coord = [$elementoImportar['lon'],$elementoImportar['lat']];
+    $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
+    $node1->set('field_xeolocalizacion_elemento',$point);  
+    $node1->save();
+  }
+
+
+
+  //
   // Menu
   //
-
   $menu = \Drupal::entityTypeManager()->getStorage('menu_link_content')
     ->loadByProperties(['menu_name' => 'main']);
   foreach ($menu as $menu_item) {
@@ -538,16 +600,33 @@ function aeira_install() {
     'expanded' => TRUE,
     'weight' => 0,
   ]);
+  $menu_link->save();
 
+  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+    'title' => 'Mapa',
+    'link' => ['uri' => 'internal:/mapa'],
+    'menu_name' => 'main',
+    'parent' => $top_level,
+    'expanded' => TRUE,
+    'weight' => 3,
+  ]);
+  $menu_link->save();
+
+  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+    'title' => 'Contacto',
+    'link' => ['uri' => 'internal:/contact/contacto'],
+    'menu_name' => 'main',
+    'parent' => $top_level,
+    'expanded' => TRUE,
+    'weight' => 5,
+  ]);
   $menu_link->save();
 
   //
   // Theme
   //
-
   \Drupal::service('theme_installer')->install(['claro']);
   \Drupal::service('theme_installer')->install(['aeira']);
   \Drupal::configFactory()->getEditable('system.theme')->set('default', 'aeira')->save();
   \Drupal::configFactory()->getEditable('system.theme')->set('admin', 'claro')->save();
-
 } 
