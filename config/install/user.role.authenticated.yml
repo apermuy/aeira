@@ -1,0 +1,11 @@
+langcode: gl
+status: true
+dependencies: {  }
+id: authenticated
+label: 'Usuario/a autenticado/a'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'view media'
+  - 'restful get elementos'

@@ -1,0 +1,11 @@
+langcode: gl
+status: true
+dependencies: {  }
+id: anonymous
+label: 'Usuario/a anónimo/a'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'view media'
+  - 'restful get elementos'

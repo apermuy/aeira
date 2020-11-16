@@ -1,14 +1,31 @@
 {
-    "Elemento1" : {
-        "title" : "Pazo das Condesas",
-        "body": "<p>Es un pazo.....</p>",
-        "lat": "43.45486",
-        "lon": "-8.26508"
-    },
-    "Elemento2:": {
-        "title" : "Igrexa de San Xulián",
-        "body": "<p>Exemplo de Igrexa no centro de Mugardos.</p>",
-        "lat": "43.45993",
-        "lon": "-8.25724"
-    }
-}
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "1",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.685267117497,42.671342215176]
+            },
+            "properties": {
+                 "title": "Elemento 1",
+                 "tid": 1,
+                 "img": "www.as.com"
+             }
+        },
+        {
+         "type": "Feature",
+         "id": "2",
+         "geometry": {
+             "type": "Point",
+             "coordinates": [-8.785267117497,42.171342215176]
+         },
+         "properties": {
+             "title": "Elemento 2",
+             "tid": 2,
+             "img": "www.as.com"
+         }
+     }
+    ]
+ }

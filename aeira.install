@@ -551,34 +551,38 @@ function aeira_install() {
 
 
   //
-  // Importar contenido demo elementos
+  // Importar contenido demo elementos en formato geoJSON
   //
   $demoFilePath = drupal_get_path('profile', 'aeira') . '/content/elementos_demo.json';
   $arquivoDemoElementos = file_get_contents($demoFilePath);
   $demoElementos = json_decode($arquivoDemoElementos, true);
+  array_shift($demoElementos);  
+  
+  foreach($demoElementos as $element => $key){
+    foreach($key as $value => $data) {
+     
+     $lon = $data["geometry"]["coordinates"][0];
+     $lat = $data["geometry"]["coordinates"][1];
+ 
+     $node = Node::create(['type' => 'elemento']);
+     $node->set('title',$data["properties"]["title"]);
+     $node->set('field_tipo_elemento', $data["properties"]["tid"]);
+     $node->set('uid', 1);
+     $node->set('langcode', 'gl');
+     $node->status = 1;
+ 
+     $node->enforceIsNew();
+     $node->save();
+ 
+     $nid = $node->id();
+     $node1 = Node::load($nid);
+     $coord = [$lon,$lat];
+     $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
+     $node1->set('field_xeolocalizacion_elemento',$point);  
+     $node1->save();   
 
-  foreach ($demoElementos as $elementoImportar) {
-
-    $node = Node::create(['type' => 'elemento']);
-    $node->set('title',$elementoImportar['title']);
-    $node->set('uid', 1);
-    $node->set('langcode', 'gl');
-    $node->status = 1;
-
-   
-
-    $node->enforceIsNew();
-    $node->save();
-
-    $nid = $node->id();
-    $node1 = Node::load($nid);
-    $coord = [$elementoImportar['lon'],$elementoImportar['lat']];
-    $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
-    $node1->set('field_xeolocalizacion_elemento',$point);  
-    $node1->save();
-  }
-
-
+    }
+  } 
 
   //
   // Menu

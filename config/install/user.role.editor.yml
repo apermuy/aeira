@@ -44,3 +44,4 @@ permissions:
   - 'view own unpublished content'
   - 'view paxina revisions'
   - 'view the administration theme'
+  - 'restful get elementos'
