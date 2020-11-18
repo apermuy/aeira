@@ -1,9 +1,8 @@
-uuid: d4a3bf85-d19a-4976-8d07-f3944e324347
+uuid: 12529375-0409-47ca-a234-403165df3c84
 langcode: gl
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.full
     - field.field.node.elemento.body
     - field.field.node.elemento.field_acceso_elemento
     - field.field.node.elemento.field_codigo_elemento
@@ -18,11 +17,11 @@ dependencies:
     - text
     - user
 _core:
-  default_config_hash: OYocsIqwwE8dCoZcC1NOaTfiPaXC4ERiICjiLsoIxNg
-id: node.elemento.full
+  default_config_hash: RxSsurbRPwZ1orh6qKKA55T1ECgW0LWxQ2n9BPEBNzc
+id: node.elemento.default
 targetEntityType: node
 bundle: elemento
-mode: full
+mode: default
 content:
   body:
     label: hidden
@@ -74,7 +73,7 @@ content:
     region: content
   field_xeolocalizacion_elemento:
     weight: 107
-    label: hidden
+    label: above
     settings:
       multiple_map: false
       leaflet_map: 'OSM Mapnik'

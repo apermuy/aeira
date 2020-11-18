@@ -1,0 +1,18 @@
+langcode: gl
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_codigo_elemento
+    - node.type.elemento
+id: node.elemento.field_codigo_elemento
+field_name: field_codigo_elemento
+entity_type: node
+bundle: elemento
+label: Código
+description: 'Código de ata 32 caracteres para identificar o elemento.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

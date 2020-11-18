@@ -1,0 +1,8 @@
+uuid: 3aaf6e1e-c97c-4d8b-a36f-e4622604f0a9
+langcode: gl
+status: true
+dependencies: {  }
+name: Concello
+vid: concello
+description: 'Vocabulario taxonómico que identifica ó Concello'
+weight: 0
