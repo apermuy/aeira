@@ -7,9 +7,9 @@ dependencies:
     - ctools
     - views
   theme:
-    - claro
+    - aeira
 id: views_block__elementos_relacionados
-theme: claro
+theme: aeira
 region: content
 weight: 0
 provider: null

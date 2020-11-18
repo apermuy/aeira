@@ -2,24 +2,27 @@ langcode: gl
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.full
-    - field.field.node.paxina.field_contido_paxina
+    - field.field.node.paxina.body
     - node.type.paxina
   module:
     - text
     - user
-id: node.paxina.full
+id: node.paxina.default
 targetEntityType: node
 bundle: paxina
-mode: full
+mode: default
 content:
-  field_contido_paxina:
+  body:
+    label: hidden
     type: text_default
-    weight: 0
-    region: content
-    label: above
+    weight: 101
     settings: {  }
     third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
 hidden:
   langcode: true
-  links: true

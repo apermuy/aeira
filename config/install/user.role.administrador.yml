@@ -1,5 +1,8 @@
+langcode: gl
+status: true
+dependencies: {  }
 id: administrador
 label: Administrador/a
 weight: 2
-langcode: gl
 is_admin: true
+permissions: {  }

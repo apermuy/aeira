@@ -1,11 +1,11 @@
-name: aeira
+name: AEira - Versión Ferrolterra
 type: profile
-description: 'AEira Profile versión Ferrolterra'
+description: 'AEira - A distribución de Drupal 9 para catalogación de elementos patrimoniais.'
 core_version_requirement: ^9
 version: '9.x-.1'
 
 distribution:
-  name: AEira Drupal 9
+  name: AEira
   langcode: gl
 
 install:

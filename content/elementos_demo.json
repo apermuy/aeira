@@ -11,21 +11,21 @@
             "properties": {
                  "title": "Elemento 1",
                  "tid": 1,
-                 "img": "www.as.com"
+                 "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Noche_sobre_Ferrolterra_-_panoramio.jpg/800px-Noche_sobre_Ferrolterra_-_panoramio.jpg"
              }
         },
         {
-         "type": "Feature",
-         "id": "2",
-         "geometry": {
-             "type": "Point",
-             "coordinates": [-8.785267117497,42.171342215176]
-         },
-         "properties": {
-             "title": "Elemento 2",
-             "tid": 2,
-             "img": "www.as.com"
-         }
+            "type": "Feature",
+            "id": "2",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.785267117497,42.171342215176]
+            },
+            "properties": {
+                "title": "Elemento 2",
+                "tid": 2,
+                "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Noche_sobre_Ferrolterra_-_panoramio.jpg/800px-Noche_sobre_Ferrolterra_-_panoramio.jpg"
+        }
      }
     ]
  }

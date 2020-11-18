@@ -1,0 +1,12 @@
+name: 'AEira - Versión Ferrolterra'
+mail: admin@exemplo.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /front
+admin_compact_mode: false
+weight_select_max: 100
+langcode: gl
+default_langcode: gl
+mail_notification: ''

@@ -46,26 +46,6 @@ function aeira_install() {
     ->getStorage('entity_view_display')
     ->create($values);
 
-  // Páxina
-  $type = \Drupal\node\Entity\NodeType::create([
-    'type' => 'paxina',
-    'name' => 'Páxina',
-    'description' => 'Tipo de contido para crear páxinas básicas',
-
-  ]);
-  
-  $type->save();
-
-  $values = array(
-    'targetEntityType' => 'node',
-    'bundle' => 'paxina',
-    'mode' => 'default',
-    'status' => TRUE,
-  );
-  \Drupal::entityTypeManager()
-    ->getStorage('entity_view_display')
-    ->create($values);
-
   // Formato de texto full_html
   
   $name = 'filter.format.full';
@@ -186,26 +166,6 @@ function aeira_install() {
   $entityDisplayRepository = \Drupal::service('entity_display.repository');
   $form_display = $entityDisplayRepository->getFormDisplay('node', 'elemento')->setComponent('field_imaxe_elemento', ['type' => 'image_image']);
   $form_display->save();
-
-  // Contido páxina
-    \Drupal\field\Entity\FieldStorageConfig::create(array(
-      'field_name' => 'field_contido_paxina',
-      'entity_type' => 'node',
-      'type' => 'text_with_summary',
-      'format' => 'full',
-      'cardinality' => 1,
-    ))->save();
-  
-    \Drupal\field\Entity\FieldConfig::create([
-      'field_name' => 'field_contido_paxina',
-      'entity_type' => 'node',
-      'bundle' => 'paxina',
-      'label' => 'Contido',
-    ])->save();
-  
-    $entityDisplayRepository = \Drupal::service('entity_display.repository');
-    $form_display = $entityDisplayRepository->getFormDisplay('node', 'paxina')->setComponent('field_contido_paxina', ['type' => 'text_textarea']);
-    $form_display->save();
 
   // 
   // Vocabularios taxonómicos
@@ -448,18 +408,6 @@ function aeira_install() {
         $form_display = $entityDisplayRepository->getFormDisplay('taxonomy_term', 'parroquia')->setComponent('field_parroquia_concello', ['type' => 'entity_reference_autocomplete_tags']);
         $form_display->save();    
 
-  // Formulario de contacto
-  $feedback_form = \Drupal\contact\Entity\ContactForm::create([
-    'id' => 'contacto',
-    'label' => 'Contacto',
-    'recipients' => ['usuaria@exemplo.com'],
-    'reply' => '',
-    'canonical' => 'contactar',
-    'redirect' => '',
-    'weight' => 0,
-    ]);
-  $feedback_form->save();
-
   //
   // Importar configuración
   //
@@ -487,13 +435,6 @@ function aeira_install() {
   $config_storage1 = \Drupal::service('config.storage');
   $config_storage1->write($tarxeta, $storage1->read($tarxeta));
 
-  // Importar display node paxina full
-  $tarxeta = 'core.entity_view_display.node.paxina.full';
-  $config_path1 = drupal_get_path('profile', 'aeira') . '/config/optional';
-  $storage1 = new \Drupal\Core\Config\FileStorage($config_path1);
-  $config_storage1 = \Drupal::service('config.storage');
-  $config_storage1->write($tarxeta, $storage1->read($tarxeta));
-  
   // Views
   
   // Importar vista /elementos
@@ -522,25 +463,6 @@ function aeira_install() {
   $config_storage->write($name, $storage->read($name));
 
   //
-  // Pathauto
-  //
-
-  // Importar patron URL para content type elementos
-  $name = 'pathauto.pattern.elemento';
-  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
-  $storage = new \Drupal\Core\Config\FileStorage($config_path);
-  $config_storage = \Drupal::service('config.storage');
-  $config_storage->write($name, $storage->read($name));
-
-  // Importar patron URL para content type paxina
-  $name = 'pathauto.pattern.paxinas';
-  $config_path = drupal_get_path('profile', 'aeira') . '/config/optional';
-  $storage = new \Drupal\Core\Config\FileStorage($config_path);
-  $config_storage = \Drupal::service('config.storage');
-  $config_storage->write($name, $storage->read($name));
-
-
-  //
   // Importar contenido demo elementos en formato geoJSON
   //
   $demoFilePath = drupal_get_path('profile', 'aeira') . '/content/elementos_demo.json';
@@ -557,6 +479,12 @@ function aeira_install() {
      $node = Node::create(['type' => 'elemento']);
      $node->set('title',$data["properties"]["title"]);
      $node->set('field_tipo_elemento', $data["properties"]["tid"]);
+
+     $ran = rand(0,999999);
+     $data = file_get_contents($data["properties"]["img"]);
+     $file = file_save_data($data, 'public://imaxe_'.$ran.'.jpg', FILE_EXISTS_RENAME);
+     $node->field_imaxe_elemento->setValue(['target_id' => $file->id(),]); 
+
      $node->set('uid', 1);
      $node->set('langcode', 'gl');
      $node->status = 1;
@@ -615,4 +543,32 @@ function aeira_install() {
     'weight' => 5,
   ]);
   $menu_link->save();
+
+  // Crear contenido portada
+  $node = Node::create(['type' => 'paxina']);
+  $node->set('title','Páxina de inicio');
+  $node->set('body', '
+    <h1 class="text-center">AEira</h1>
+    <p class="text-center"><b>Parabéns</b>, a instalación rematou con éxito.</p>
+    <p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Noche_sobre_Ferrolterra_-_panoramio.jpg/1024px-Noche_sobre_Ferrolterra_-_panoramio.jpg" class="rounded mx-auto d-block" alt="...">
+    </p>
+    <p class="text-center"><a href="https://commons.wikimedia.org/wiki/File:Noche_sobre_Ferrolterra_-_panoramio.jpg">Imaxe orixinal de Carrodeguas</a>
+    <h6 class="text-center">Software libre para catalogación do patrimonio.</h3>
+    <h6 class="text-center">Versión Ferrolterra.</h3>  ');
+  $node->body->format = 'full';
+  
+  $node->set('uid', 1);
+  $node->set('langcode', 'gl');
+  $node->status = 1;
+                
+  $node->enforceIsNew();
+  $node->save();
+                
+  $nid = $node->id();
+  $path_alias = \Drupal\path_alias\Entity\PathAlias::create([
+    'path' => '/node/' . $nid,
+    'alias' => '/front',
+  ]);            
+  $path_alias->save();  
 } 
