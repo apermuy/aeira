@@ -1,7 +1,8 @@
 name: aeira
 type: profile
-description: 'AEira Profile'
+description: 'AEira Profile versión Ferrolterra'
 core_version_requirement: ^9
+version: '9.x-.1'
 
 distribution:
   name: AEira Drupal 9
@@ -38,11 +39,24 @@ install:
   - editor
   - ckeditor
   - block
+  
+  ##
+  ## Contrib modules
+  ##
+  - geofield:geofield
+  - leaflet:leaflet
+  - pathauto:pathauto
+  - token:token
+  - pathauto:pathauto
+  - restui:restui
+
+  ## Custom modules
+  - aeiraresources:aeiraresources
 
 dependencies:
   - drupal:node
   - drupal:views
 
 themes:
-  - bartik
-  - seven
+  - aeira
+  - claro

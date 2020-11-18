@@ -24,16 +24,6 @@ function aeira_install() {
   include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
   standard_install();
 
-  // Habilitar módulos contrib
-  \Drupal::service("module_installer")->install(["geofield"]);
-  \Drupal::service("module_installer")->install(["leaflet"]);
-  \Drupal::service("module_installer")->install(["token"]);
-  \Drupal::service("module_installer")->install(["pathauto"]);
-  \Drupal::service("module_installer")->install(["restui"]);
-
-  // Habilitar módulos custom
-  \Drupal::service("module_installer")->install(["aeiraresources"]);
-
   // 
   // Tipos de contido
   // 
@@ -625,12 +615,4 @@ function aeira_install() {
     'weight' => 5,
   ]);
   $menu_link->save();
-
-  //
-  // Theme
-  //
-  \Drupal::service('theme_installer')->install(['claro']);
-  \Drupal::service('theme_installer')->install(['aeira']);
-  \Drupal::configFactory()->getEditable('system.theme')->set('default', 'aeira')->save();
-  \Drupal::configFactory()->getEditable('system.theme')->set('admin', 'claro')->save();
 } 
