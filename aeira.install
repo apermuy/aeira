@@ -75,11 +75,13 @@ function aeira_install() {
      $node = Node::create(['type' => 'elemento']);
      $node->set('title',$data["properties"]["title"]);
      $node->set('field_tipo_elemento', $data["properties"]["tid"]);
+     $node->set('field_acceso_elemento', $data["properties"]["tid"]);
+     $node->set('field_concello_elemento', $data["properties"]["tid"]);
 
      $ran = rand(0,999999);
      $data = file_get_contents($data["properties"]["img"]);
      $file = file_save_data($data, 'public://imaxe_'.$ran.'.jpg', FILE_EXISTS_RENAME);
-     $node->field_imaxe_elemento->setValue(['target_id' => $file->id(),]); 
+     $node->field_imaxe_elemento->setValue(['target_id' => $file->id()]); 
 
      $node->set('uid', 1);
      $node->set('langcode', 'gl');
@@ -153,7 +155,7 @@ function aeira_install() {
     <h6 class="text-center">Software libre para catalogación do patrimonio.</h3>
     <h6 class="text-center">Versión Ferrolterra.</h3>  ');
   $node->body->format = 'full';
-  
+    
   $node->set('uid', 1);
   $node->set('langcode', 'gl');
   $node->status = 1;

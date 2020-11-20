@@ -1,4 +1,3 @@
-uuid: 12529375-0409-47ca-a234-403165df3c84
 langcode: gl
 status: true
 dependencies:
@@ -16,8 +15,6 @@ dependencies:
     - leaflet
     - text
     - user
-_core:
-  default_config_hash: RxSsurbRPwZ1orh6qKKA55T1ECgW0LWxQ2n9BPEBNzc
 id: node.elemento.default
 targetEntityType: node
 bundle: elemento

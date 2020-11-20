@@ -1,4 +1,3 @@
-uuid: c06cfe34-a0b8-41f5-8f56-d4d5c7112459
 langcode: gl
 status: true
 dependencies:
@@ -16,8 +15,6 @@ dependencies:
   module:
     - image
     - user
-_core:
-  default_config_hash: U890HqfoD6rdZtn8WOiWALmKhvvCEuNOb1y_L6yVAcY
 id: node.elemento.teaser
 targetEntityType: node
 bundle: elemento
