@@ -16,6 +16,8 @@ dependencies:
     - leaflet
     - text
     - user
+_core:
+  default_config_hash: xpYyGPueexKCgrZwwNpzNeTUXWukPW6KA3seC2XGhm0
 id: node.elemento.full
 targetEntityType: node
 bundle: elemento
@@ -74,20 +76,15 @@ content:
     label: hidden
     settings:
       multiple_map: false
+      popup_content: ''
       leaflet_map: 'OSM Mapnik'
       height: 400
       height_unit: px
-      hide_empty_map: false
-      disable_wheel: false
       fullscreen_control: true
-      gesture_handling: false
       reset_map:
-        control: false
         position: topright
-      popup: false
-      popup_content: ''
+        control: false
       map_position:
-        force: false
         center:
           lat: !!float 0
           lon: !!float 0
@@ -95,34 +92,39 @@ content:
         minZoom: 1
         maxZoom: 18
         zoomFiner: 0
-      weight: null
+        force: false
+      weight: ''
       icon:
         iconType: marker
         iconUrl: ''
         shadowUrl: ''
         className: ''
-        iconSize:
-          x: null
-          'y': null
-        iconAnchor:
-          x: null
-          'y': null
-        shadowSize:
-          x: null
-          'y': null
-        shadowAnchor:
-          x: null
-          'y': null
-        popupAnchor:
-          x: null
-          'y': null
         html: '<div></div>'
         html_class: leaflet-map-divicon
-        circle_marker_options: '{"radius": 100, "color": "red", "fillColor": "#f03", "fillOpacity": 0.5}'
+        circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
+        iconSize:
+          x: ''
+          'y': ''
+        iconAnchor:
+          x: ''
+          'y': ''
+        shadowSize:
+          x: ''
+          'y': ''
+        shadowAnchor:
+          x: ''
+          'y': ''
+        popupAnchor:
+          x: ''
+          'y': ''
+      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
+      popup: false
+      hide_empty_map: false
+      disable_wheel: false
+      gesture_handling: false
       leaflet_markercluster:
         control: false
         options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
-      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
       geocoder:
         control: false
         settings:

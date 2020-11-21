@@ -2,6 +2,7 @@
 
 use \Drupal\node\Entity\Node;
 use \Drupal\taxonomy\Entity\Term;
+use \Drupal\media\Entity\Media;
 use \Drupal\Core\Language\Language;
 use \Drupal\Core\Controller\ControllerBase;
 use \Symfony\Component\DependencyInjection\ContainerInterface;
@@ -61,7 +62,7 @@ function aeira_install() {
   //
   // Importar contenido demo elementos en formato geoJSON
   //
-  $demoFilePath = drupal_get_path('profile', 'aeira') . '/content/elementos_demo.json';
+  $demoFilePath = drupal_get_path('profile', 'aeira') . '/content/demo/json/elementos.json';
   $arquivoDemoElementos = file_get_contents($demoFilePath);
   $demoElementos = json_decode($arquivoDemoElementos, true);
   array_shift($demoElementos);  
@@ -69,33 +70,44 @@ function aeira_install() {
   foreach($demoElementos as $element => $key){
     foreach($key as $value => $data) {
      
+      $imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
+      $file_data = file_get_contents($imageUri);
+      $file = file_save_data($file_data, 'public://' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
+      /*$media = Media::create([
+        'bundle'           => 'file',
+        'uid'              => 1,
+        'field_imaxe_elemento' => [
+          'target_id' => $file->id(),
+        ],
+      ]);
+      $media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
+      */
+
+
      $lon = $data["geometry"]["coordinates"][0];
      $lat = $data["geometry"]["coordinates"][1];
  
+
      $node = Node::create(['type' => 'elemento']);
      $node->set('title',$data["properties"]["title"]);
      $node->set('field_tipo_elemento', $data["properties"]["tid"]);
      $node->set('field_acceso_elemento', $data["properties"]["tid"]);
      $node->set('field_concello_elemento', $data["properties"]["tid"]);
+     //$node->field_imaxe_elemento->setValue(['target_id' => $media->id(),]);   
 
-     $ran = rand(0,999999);
-     $data = file_get_contents($data["properties"]["img"]);
-     $file = file_save_data($data, 'public://imaxe_'.$ran.'.jpg', FILE_EXISTS_RENAME);
-     $node->field_imaxe_elemento->setValue(['target_id' => $file->id()]); 
-
-     $node->set('uid', 1);
-     $node->set('langcode', 'gl');
-     $node->status = 1;
+      $node->set('uid', 1);
+      $node->set('langcode', 'gl');
+      $node->status = 1;
  
-     $node->enforceIsNew();
-     $node->save();
+      $node->enforceIsNew();
+      $node->save();
  
-     $nid = $node->id();
-     $node1 = Node::load($nid);
-     $coord = [$lon,$lat];
-     $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
-     $node1->set('field_xeolocalizacion_elemento',$point);  
-     $node1->save();   
+      $nid = $node->id();
+      $node1 = Node::load($nid);
+      $coord = [$lon,$lat];
+      $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
+      $node1->set('field_xeolocalizacion_elemento',$point);  
+      $node1->save();   
 
     }
   } 
@@ -112,6 +124,17 @@ function aeira_install() {
       break;
     }
   }
+
+  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+    'title' => 'Aeira',
+    'link' => ['uri' => 'internal:/<front>'],
+    'menu_name' => 'main',
+    'parent' => $top_level,
+    'expanded' => TRUE,
+    'weight' => 0,
+  ]);
+  $menu_link->save();
+
   $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
     'title' => 'Elementos',
     'link' => ['uri' => 'internal:/elementos'],
@@ -137,7 +160,7 @@ function aeira_install() {
     'link' => ['uri' => 'internal:/contact/contacto'],
     'menu_name' => 'main',
     'parent' => $top_level,
-    'expanded' => TRUE,
+      'expanded' => TRUE, 
     'weight' => 5,
   ]);
   $menu_link->save();
@@ -153,7 +176,7 @@ function aeira_install() {
     </p>
     <p class="text-center"><a href="https://commons.wikimedia.org/wiki/File:Noche_sobre_Ferrolterra_-_panoramio.jpg">Imaxe orixinal de Carrodeguas</a>
     <h6 class="text-center">Software libre para catalogación do patrimonio.</h3>
-    <h6 class="text-center">Versión Ferrolterra.</h3>  ');
+    <h6 class="text-center">Versión Ferrolterra.</h3>');
   $node->body->format = 'full';
     
   $node->set('uid', 1);

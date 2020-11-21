@@ -9,13 +9,14 @@ dependencies:
     - field.field.node.elemento.field_imaxe_elemento
     - field.field.node.elemento.field_tipo_elemento
     - field.field.node.elemento.field_xeolocalizacion_elemento
-    - image.style.thumbnail
     - node.type.elemento
   module:
     - geofield
-    - image
+    - media_library
     - path
     - text
+_core:
+  default_config_hash: sNka-ofjRbOTiOiMEfOFcwXLaJjaQ4ANVnKKBhoN_Fo
 id: node.elemento.default
 targetEntityType: node
 bundle: elemento
@@ -60,10 +61,9 @@ content:
   field_imaxe_elemento:
     weight: 7
     settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
+      media_types: {  }
     third_party_settings: {  }
-    type: image_image
+    type: media_library_widget
     region: content
   field_tipo_elemento:
     weight: 6
