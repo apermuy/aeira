@@ -10,33 +10,23 @@ dependencies:
     - field.field.node.elemento.field_imaxe_elemento
     - field.field.node.elemento.field_tipo_elemento
     - field.field.node.elemento.field_xeolocalizacion_elemento
-    - image.style.large
     - node.type.elemento
   module:
-    - image
     - user
 _core:
-  default_config_hash: OWUnyW91WASVaLk124WqS33d4D2WvJFvaubqMIwQ4dc
+  default_config_hash: tFmNCafeSnl4qYW6HCLzmdirwQv4OhpR1AcaymPYwbI
 id: node.elemento.teaser
 targetEntityType: node
 bundle: elemento
 mode: teaser
 content:
   field_imaxe_elemento:
-    type: image
+    type: entity_reference_entity_view
     weight: 0
     region: content
     label: hidden
     settings:
-      image_style: large
-      image_link: content
-    third_party_settings: {  }
-  field_tipo_elemento:
-    type: entity_reference_label
-    weight: 1
-    region: content
-    label: hidden
-    settings:
+      view_mode: default
       link: false
     third_party_settings: {  }
 hidden:
@@ -44,6 +34,7 @@ hidden:
   field_acceso_elemento: true
   field_codigo_elemento: true
   field_concello_elemento: true
+  field_tipo_elemento: true
   field_xeolocalizacion_elemento: true
   langcode: true
   links: true

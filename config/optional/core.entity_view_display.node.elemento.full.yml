@@ -12,12 +12,11 @@ dependencies:
     - field.field.node.elemento.field_xeolocalizacion_elemento
     - node.type.elemento
   module:
-    - image
     - leaflet
     - text
     - user
 _core:
-  default_config_hash: xpYyGPueexKCgrZwwNpzNeTUXWukPW6KA3seC2XGhm0
+  default_config_hash: oMWOGFkMDiSHpJW-3KxGxgk8zy0EKzFEkNs2Ji4qfdA
 id: node.elemento.full
 targetEntityType: node
 bundle: elemento
@@ -58,10 +57,10 @@ content:
     weight: 104
     label: above
     settings:
-      image_style: ''
-      image_link: ''
+      view_mode: default
+      link: false
     third_party_settings: {  }
-    type: image
+    type: entity_reference_entity_view
     region: content
   field_tipo_elemento:
     weight: 106

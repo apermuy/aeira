@@ -73,27 +73,24 @@ function aeira_install() {
       $imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
       $file_data = file_get_contents($imageUri);
       $file = file_save_data($file_data, 'public://' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
-      /*$media = Media::create([
-        'bundle'           => 'file',
+      $media = Media::create([
+        'bundle'           => 'imaxe_elemento',
         'uid'              => 1,
-        'field_imaxe_elemento' => [
+        'field_media_image' => [
           'target_id' => $file->id(),
         ],
       ]);
       $media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
-      */
-
-
-     $lon = $data["geometry"]["coordinates"][0];
-     $lat = $data["geometry"]["coordinates"][1];
+      
+      $lon = $data["geometry"]["coordinates"][0];
+      $lat = $data["geometry"]["coordinates"][1];
  
-
-     $node = Node::create(['type' => 'elemento']);
-     $node->set('title',$data["properties"]["title"]);
-     $node->set('field_tipo_elemento', $data["properties"]["tid"]);
-     $node->set('field_acceso_elemento', $data["properties"]["tid"]);
-     $node->set('field_concello_elemento', $data["properties"]["tid"]);
-     //$node->field_imaxe_elemento->setValue(['target_id' => $media->id(),]);   
+      $node = Node::create(['type' => 'elemento']);
+      $node->set('title',$data["properties"]["title"]);
+      $node->set('field_tipo_elemento', $data["properties"]["tid"]);
+      $node->set('field_acceso_elemento', $data["properties"]["tid"]);
+      $node->set('field_concello_elemento', $data["properties"]["tid"]);
+      $node->field_imaxe_elemento->setValue(['target_id' => $media->id(),]);   
 
       $node->set('uid', 1);
       $node->set('langcode', 'gl');
