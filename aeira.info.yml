@@ -31,7 +31,6 @@ install:
   - layout_builder
   - layout_discovery
   - responsive_image
-  - search
   - shortcut
   - toolbar
   - field_ui
@@ -56,6 +55,8 @@ install:
   - admin_toolbar:admin_toolbar
   - admin_toolbar:admin_toolbar_tools
   - simplelogin:simplelogin
+  - search_api:search_api
+  - search_api:search_api_db
 
 
   ## Custom modules
