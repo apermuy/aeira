@@ -72,39 +72,49 @@ function aeira_install() {
      
       $imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
       $file_data = file_get_contents($imageUri);
-      $file = file_save_data($file_data, 'public://' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
+      $file = file_save_data($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
       $media = Media::create([
         'bundle'           => 'imaxe_elemento',
         'uid'              => 1,
         'field_media_image' => [
           'target_id' => $file->id(),
+          'alt' => $data["properties"]["title"],
+          'title' => $data["properties"]["title"],
         ],
       ]);
       $media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
-      
-      $lon = $data["geometry"]["coordinates"][0];
-      $lat = $data["geometry"]["coordinates"][1];
  
-      $node = Node::create(['type' => 'elemento']);
-      $node->set('title',$data["properties"]["title"]);
-      $node->set('field_tipo_elemento', $data["properties"]["tid"]);
-      $node->set('field_acceso_elemento', $data["properties"]["tid"]);
-      $node->set('field_concello_elemento', $data["properties"]["tid"]);
-      $node->field_imaxe_elemento->setValue(['target_id' => $media->id(),]);   
-
-      $node->set('uid', 1);
-      $node->set('langcode', 'gl');
-      $node->status = 1;
- 
-      $node->enforceIsNew();
-      $node->save();
+      $node = Node::create([
+        'type'  => 'elemento',
+        'langcode'  => 'gl',
+        'uid'   => 1,
+        'moderation_state' => 'published',
+        'status' => 1,
+        'title' => $data["properties"]["title"],
+        'field_imaxe_elemento' => ['target_id' => $media->id()],
+      ]);
+      $node->save(); 
  
       $nid = $node->id();
-      $node1 = Node::load($nid);
-      $coord = [$lon,$lat];
+
+      $contido = Node::load($nid);
+      
+      //Xeolocalización
+      $lon = $data["geometry"]["coordinates"][0];
+      $lat = $data["geometry"]["coordinates"][1];
+      $coord = [$lon,$lat];            
+
       $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
-      $node1->set('field_xeolocalizacion_elemento',$point);  
-      $node1->save();   
+
+      $contido->set('field_xeolocalizacion_elemento',$point);  
+      $contido->set('field_tipo_elemento', 1);
+      $contido->set('field_acceso_elemento',1);
+      $contido->set('field_concello_elemento',1);
+      $contido->set('field_codigo_elemento', 'DEMO');
+
+      $contido->set('field_imaxe_elemento', $media->id());
+
+      $contido->save();   
 
     }
   } 
