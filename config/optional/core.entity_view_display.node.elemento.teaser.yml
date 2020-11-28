@@ -10,24 +10,26 @@ dependencies:
     - field.field.node.elemento.field_imaxe_elemento
     - field.field.node.elemento.field_tipo_elemento
     - field.field.node.elemento.field_xeolocalizacion_elemento
+    - image.style.medium
     - node.type.elemento
   module:
+    - media
     - user
 _core:
-  default_config_hash: tFmNCafeSnl4qYW6HCLzmdirwQv4OhpR1AcaymPYwbI
+  default_config_hash: XPa2qUu3vO-yOQjDlqskf6b8gulDIC8dH5oV_6jAh9M
 id: node.elemento.teaser
 targetEntityType: node
 bundle: elemento
 mode: teaser
 content:
   field_imaxe_elemento:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     weight: 0
     region: content
     label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_style: medium
+      image_link: content
     third_party_settings: {  }
 hidden:
   body: true

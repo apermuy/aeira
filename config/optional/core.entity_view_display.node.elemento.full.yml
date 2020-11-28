@@ -13,10 +13,9 @@ dependencies:
     - node.type.elemento
   module:
     - leaflet
+    - media
     - text
     - user
-_core:
-  default_config_hash: oMWOGFkMDiSHpJW-3KxGxgk8zy0EKzFEkNs2Ji4qfdA
 id: node.elemento.full
 targetEntityType: node
 bundle: elemento
@@ -55,12 +54,12 @@ content:
     region: content
   field_imaxe_elemento:
     weight: 104
-    label: above
+    label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_style: ''
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: media_thumbnail
     region: content
   field_tipo_elemento:
     weight: 106
