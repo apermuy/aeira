@@ -28,6 +28,8 @@ install:
   - node
   - user
   - language
+  - layout_builder
+  - layout_discovery
   - responsive_image
   - search
   - shortcut
