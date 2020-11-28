@@ -1,0 +1,7 @@
+langcode: gl
+status: true
+dependencies: {  }
+name: Concello
+vid: concello
+description: 'Vocabulario taxonómico que identifica ó Concello'
+weight: 0

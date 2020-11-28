@@ -1,0 +1,148 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "1",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.28161,43.45066]
+            },
+            "properties": {
+                 "title":"Mosteiro de Santa Catalina de Montefaro",
+                 "tid": 1,
+                 "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "2",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.24593,43.42529]
+            },
+            "properties": {
+                "title": "Centro SocioCultural",
+                "tid": 2,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "3",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.1779671,43.4273524]
+            },
+            "properties": {
+                "title": "Pazo do Fraián",
+                "tid": 3,
+                "img": "logo2018.png"
+             }
+        },
+         {
+            "type": "Feature",
+            "id": "4",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.168828,43.415585]
+            },
+            "properties": {
+                "title": "Estación do Tren",
+                "tid": 4,
+                "img": "logo2018.png"
+             }
+        },  
+        {
+            "type": "Feature",
+            "id": "5",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-7.9841,43.70904]
+            },
+            "properties": {
+                "title": "San Andrés de Teixido",
+                "tid": 4,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "6",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.07149,43.65852]
+            },
+            "properties": {
+                "title": "Castelo da Concepción",
+                "tid": 4,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "7",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.1211,43.4818]
+            },
+            "properties": {
+                "title": "Fervenza do Río Belelle",
+                "tid": 4,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "8",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.1932,43.46007]
+            },
+            "properties": {
+                "title": "Antiguo Cine Adriano",
+                "tid": 1,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "9",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.2821,43.46459]
+            },
+            "properties": {
+                "title": "Castelo de San Felipe",
+                "tid": 1,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "10",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-8.23411,43.48241]
+            },
+            "properties": {
+                "title": "Teatro Jofre",
+                "tid": 1,
+                "img": "logo2018.png"
+             }
+        },
+        {
+            "type": "Feature",
+            "id": "11",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-7.99285,43.54998]
+            },
+            "properties": {
+                "title": "Castelo de Moeche",
+                "tid": 1,
+                "img": "logo2018.png"
+             }
+        }
+    ]   
+ }

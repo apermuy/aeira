@@ -1,9 +1,0 @@
-langcode: gl
-status: true
-dependencies:
-  module:
-    - node
-id: node.tarxeta
-label: tarxeta
-targetEntityType: node
-cache: true

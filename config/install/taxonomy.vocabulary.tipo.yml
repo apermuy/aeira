@@ -1,0 +1,7 @@
+langcode: gl
+status: true
+dependencies: {  }
+name: 'Tipo de elemento'
+vid: tipo
+description: 'Vocabulario taxonómico que almacena distintos tipos de elemento do proxecto'
+weight: 0

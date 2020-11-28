@@ -3,44 +3,38 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.elemento.body
     - field.field.node.elemento.field_acceso_elemento
     - field.field.node.elemento.field_codigo_elemento
-    - field.field.node.elemento.field_descricion_elemento
+    - field.field.node.elemento.field_concello_elemento
     - field.field.node.elemento.field_imaxe_elemento
-    - field.field.node.elemento.field_lugar_elemento
-    - field.field.node.elemento.field_parroquia_elemento
     - field.field.node.elemento.field_tipo_elemento
     - field.field.node.elemento.field_xeolocalizacion_elemento
-    - image.style.medium
     - node.type.elemento
   module:
-    - image
     - user
+_core:
+  default_config_hash: tFmNCafeSnl4qYW6HCLzmdirwQv4OhpR1AcaymPYwbI
 id: node.elemento.teaser
 targetEntityType: node
 bundle: elemento
 mode: teaser
 content:
   field_imaxe_elemento:
-    type: image
+    type: entity_reference_entity_view
     weight: 0
     region: content
-    label: inline
+    label: hidden
     settings:
-      image_style: medium
-      image_link: content
-    third_party_settings: {  }
-  links:
-    weight: 1
-    region: content
-    settings: {  }
+      view_mode: default
+      link: false
     third_party_settings: {  }
 hidden:
+  body: true
   field_acceso_elemento: true
   field_codigo_elemento: true
-  field_descricion_elemento: true
-  field_lugar_elemento: true
-  field_parroquia_elemento: true
+  field_concello_elemento: true
   field_tipo_elemento: true
   field_xeolocalizacion_elemento: true
   langcode: true
+  links: true

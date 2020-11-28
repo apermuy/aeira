@@ -23,10 +23,13 @@ install:
   - taxonomy
   - dblog
   - media
+  - media_library
   - menu_ui
   - node
   - user
   - language
+  - layout_builder
+  - layout_discovery
   - responsive_image
   - search
   - shortcut
@@ -49,6 +52,11 @@ install:
   - token:token
   - pathauto:pathauto
   - restui:restui
+  - views_bootstrap:views_bootstrap
+  - admin_toolbar:admin_toolbar
+  - admin_toolbar:admin_toolbar_tools
+  - simplelogin:simplelogin
+
 
   ## Custom modules
   - aeiraresources:aeiraresources

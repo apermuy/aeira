@@ -2,7 +2,6 @@ langcode: gl
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.full
     - field.field.node.elemento.body
     - field.field.node.elemento.field_acceso_elemento
     - field.field.node.elemento.field_codigo_elemento
@@ -12,15 +11,14 @@ dependencies:
     - field.field.node.elemento.field_xeolocalizacion_elemento
     - node.type.elemento
   module:
+    - image
     - leaflet
     - text
     - user
-_core:
-  default_config_hash: oMWOGFkMDiSHpJW-3KxGxgk8zy0EKzFEkNs2Ji4qfdA
-id: node.elemento.full
+id: node.elemento.default
 targetEntityType: node
 bundle: elemento
-mode: full
+mode: default
 content:
   body:
     label: hidden
@@ -57,10 +55,10 @@ content:
     weight: 104
     label: above
     settings:
-      view_mode: default
-      link: false
+      image_style: ''
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: image
     region: content
   field_tipo_elemento:
     weight: 106
@@ -72,18 +70,23 @@ content:
     region: content
   field_xeolocalizacion_elemento:
     weight: 107
-    label: hidden
+    label: above
     settings:
       multiple_map: false
-      popup_content: ''
       leaflet_map: 'OSM Mapnik'
       height: 400
       height_unit: px
+      hide_empty_map: false
+      disable_wheel: false
       fullscreen_control: true
+      gesture_handling: false
       reset_map:
-        position: topright
         control: false
+        position: topright
+      popup: false
+      popup_content: ''
       map_position:
+        force: false
         center:
           lat: !!float 0
           lon: !!float 0
@@ -91,39 +94,34 @@ content:
         minZoom: 1
         maxZoom: 18
         zoomFiner: 0
-        force: false
-      weight: ''
+      weight: null
       icon:
         iconType: marker
         iconUrl: ''
         shadowUrl: ''
         className: ''
+        iconSize:
+          x: null
+          'y': null
+        iconAnchor:
+          x: null
+          'y': null
+        shadowSize:
+          x: null
+          'y': null
+        shadowAnchor:
+          x: null
+          'y': null
+        popupAnchor:
+          x: null
+          'y': null
         html: '<div></div>'
         html_class: leaflet-map-divicon
-        circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
-        iconSize:
-          x: ''
-          'y': ''
-        iconAnchor:
-          x: ''
-          'y': ''
-        shadowSize:
-          x: ''
-          'y': ''
-        shadowAnchor:
-          x: ''
-          'y': ''
-        popupAnchor:
-          x: ''
-          'y': ''
-      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
-      popup: false
-      hide_empty_map: false
-      disable_wheel: false
-      gesture_handling: false
+        circle_marker_options: '{"radius": 100, "color": "red", "fillColor": "#f03", "fillOpacity": 0.5}'
       leaflet_markercluster:
         control: false
         options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
+      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
       geocoder:
         control: false
         settings:

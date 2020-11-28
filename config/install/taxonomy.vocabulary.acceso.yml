@@ -1,0 +1,7 @@
+langcode: gl
+status: true
+dependencies: {  }
+name: Acceso
+vid: acceso
+description: 'Vocabulario taxonómico que identifica o tipo de acceso ó elemento'
+weight: 0
