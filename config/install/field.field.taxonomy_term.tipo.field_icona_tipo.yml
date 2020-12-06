@@ -1,30 +1,29 @@
-uuid: bf80a77b-abb0-4e7a-8ff3-59f4d707eafb
 langcode: gl
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_imaxe_tipo
+    - field.storage.taxonomy_term.field_icona_tipo
     - taxonomy.vocabulary.tipo
   module:
     - image
-id: taxonomy_term.tipo.field_imaxe_tipo
-field_name: field_imaxe_tipo
+id: taxonomy_term.tipo.field_icona_tipo
+field_name: field_icona_tipo
 entity_type: taxonomy_term
 bundle: tipo
-label: imaxe_tipo
-description: 'Icona da imaxe do elemento a empregar como "marker" no mapa do sitio.'
+label: Icona
+description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_directory: iconas_tipo_elemento
   file_extensions: 'png gif jpg jpeg'
-  max_filesize: 50KB
+  max_filesize: ''
   max_resolution: ''
   min_resolution: ''
-  alt_field: true
-  alt_field_required: true
+  alt_field: false
+  alt_field_required: false
   title_field: false
   title_field_required: false
   default_image:

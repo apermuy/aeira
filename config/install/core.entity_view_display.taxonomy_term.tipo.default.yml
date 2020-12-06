@@ -1,0 +1,33 @@
+langcode: gl
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.tipo.field_icona_tipo
+    - taxonomy.vocabulary.tipo
+  module:
+    - image
+    - text
+id: taxonomy_term.tipo.default
+targetEntityType: taxonomy_term
+bundle: tipo
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_icona_tipo:
+    weight: 1
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

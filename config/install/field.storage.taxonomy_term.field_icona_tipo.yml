@@ -1,4 +1,3 @@
-uuid: 4fee4587-812c-4de4-a1c7-233538685ab1
 langcode: gl
 status: true
 dependencies:
@@ -6,8 +5,8 @@ dependencies:
     - file
     - image
     - taxonomy
-id: taxonomy_term.field_imaxe_tipo
-field_name: field_imaxe_tipo
+id: taxonomy_term.field_icona_tipo
+field_name: field_icona_tipo
 entity_type: taxonomy_term
 type: image
 settings:
