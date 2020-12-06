@@ -11,7 +11,7 @@
             "properties": {
                  "title":"Mosteiro de Santa Catalina de Montefaro",
                  "tid": 1,
-                 "img": "logo2018.png"
+                 "img": "monasteriodesantacatalina.jpg"
              }
         },
         {
@@ -24,7 +24,7 @@
             "properties": {
                 "title": "Centro SocioCultural",
                 "tid": 2,
-                "img": "logo2018.png"
+                "img": "centrosociocultural.jpg"
              }
         },
         {
@@ -37,7 +37,7 @@
             "properties": {
                 "title": "Pazo do Fraián",
                 "tid": 3,
-                "img": "logo2018.png"
+                "img": "pazodofraian.jpg"
              }
         },
          {
@@ -50,7 +50,7 @@
             "properties": {
                 "title": "Estación do Tren",
                 "tid": 4,
-                "img": "logo2018.png"
+                "img": "estaciondotren.jpg"
              }
         },  
         {
@@ -63,7 +63,7 @@
             "properties": {
                 "title": "San Andrés de Teixido",
                 "tid": 4,
-                "img": "logo2018.png"
+                "img": "sanandresdeteixido"
              }
         },
         {
@@ -76,7 +76,7 @@
             "properties": {
                 "title": "Castelo da Concepción",
                 "tid": 4,
-                "img": "logo2018.png"
+                "img": "castelodaconcepcion.jpg"
              }
         },
         {
@@ -89,7 +89,7 @@
             "properties": {
                 "title": "Fervenza do Río Belelle",
                 "tid": 4,
-                "img": "logo2018.png"
+                "img": "fernvenzadoriobelelle.jpg"
              }
         },
         {
@@ -102,7 +102,7 @@
             "properties": {
                 "title": "Antiguo Cine Adriano",
                 "tid": 1,
-                "img": "logo2018.png"
+                "img": "cineadriano.jpg"
              }
         },
         {
@@ -115,7 +115,7 @@
             "properties": {
                 "title": "Castelo de San Felipe",
                 "tid": 1,
-                "img": "logo2018.png"
+                "img": "castelodesanfelipe.jpg"
              }
         },
         {
@@ -128,7 +128,7 @@
             "properties": {
                 "title": "Teatro Jofre",
                 "tid": 1,
-                "img": "logo2018.png"
+                "img": "teatrojofre.jpg"
              }
         },
         {
@@ -141,7 +141,7 @@
             "properties": {
                 "title": "Castelo de Moeche",
                 "tid": 1,
-                "img": "logo2018.png"
+                "img": "castelodemoeche.jpg"
              }
         }
     ]   

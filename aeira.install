@@ -107,7 +107,7 @@ function aeira_install() {
       $point =  Drupal::service('geofield.wkt_generator')->WktBuildPoint($coord);
 
       $contido->set('field_xeolocalizacion_elemento',$point);  
-      $contido->set('field_tipo_elemento', 1);
+      $contido->set('field_tipo_elemento', rand(1,4));
       $contido->set('field_acceso_elemento',1);
       $contido->set('field_concello_elemento',1);
       $contido->set('field_codigo_elemento', 'DEMO');
