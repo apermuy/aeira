@@ -1,0 +1,11 @@
+langcode: gl
+status: true
+dependencies: {  }
+id: contacto_aeira
+label: 'Contacto aeira'
+recipients:
+  - exemplo@example.com
+reply: ''
+weight: 0
+message: ''
+redirect: ''

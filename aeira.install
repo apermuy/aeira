@@ -164,7 +164,7 @@ function aeira_install() {
 
   $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
     'title' => 'Contacto',
-    'link' => ['uri' => 'internal:/contact/contacto'],
+    'link' => ['uri' => 'internal:/contact/contacto_aeira'],
     'menu_name' => 'main',
     'parent' => $top_level,
       'expanded' => TRUE, 
