@@ -82,7 +82,7 @@ function aeira_install() {
           'title' => $data["properties"]["title"],
         ],
       ]);*/
-      $media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
+      //$media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
  
       $node = Node::create([
         'type'  => 'elemento',
