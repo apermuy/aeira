@@ -74,22 +74,15 @@ function aeira_install() {
   
   foreach($demoElementos as $element => $key){
     foreach($key as $value => $data) {
-     
-      //$imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
-      //$file_data = file_get_contents($imageUri);
-      $filepath = $extension_list->getPath('aeira') . '/content/demo/images/'. $data["properties"]["img"] ;
+   
 
-      // @see https://www.drupal.org/node/3223520
-      // @see https://gorannikolovski.com/blog/drupal-create-file-programmatically
-      //$file = \Drupal::service('file.repository')->writeData($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
+      $filepath = $extension_list->getPath('aeira') . '/content/demo/images/'. $data["properties"]["img"] ;
 
       $directory = 'public://aeira';
       $file_system = \Drupal::service('file_system');
       $file_system->prepareDirectory($directory, FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
       $file_system->copy($filepath, $directory . '/' . basename($filepath), FileSystemInterface::EXISTS_REPLACE);
-      
-            
-
+ 
       $file = File::create([
         'filename' => basename($filepath),
         'uri' => $directory . '/' . basename($filepath),
@@ -144,18 +137,18 @@ function aeira_install() {
     }
   } 
 
-  //
-  // Menu
-  //
-  $menu = \Drupal::entityTypeManager()->getStorage('menu_link_content')
-    ->loadByProperties(['menu_name' => 'main']);
-  foreach ($menu as $menu_item) {
-    $parent_id = $menu_item->getParentId();
-    if (!empty($parent_id)) {
-      $top_level = $parent_id;
-      break;
+    //
+    // Menu
+    //
+    $menu = \Drupal::entityTypeManager()->getStorage('menu_link_content')
+      ->loadByProperties(['menu_name' => 'main']);
+    foreach ($menu as $menu_item) {
+      $parent_id = $menu_item->getParentId();
+      if (!empty($parent_id)) {
+        $top_level = $parent_id;
+        break;
+      }
     }
-  }
 
   $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
     'title' => 'Aeira',
@@ -163,7 +156,7 @@ function aeira_install() {
     'menu_name' => 'main',
     'parent' => $top_level,
     'expanded' => TRUE,
-    'weight' => 0,
+    'weight' => 1,
   ]);
   $menu_link->save();
 
@@ -173,7 +166,7 @@ function aeira_install() {
     'menu_name' => 'main',
     'parent' => $top_level,
     'expanded' => TRUE,
-    'weight' => 0,
+    'weight' => 2,
   ]);
   $menu_link->save();
 
@@ -186,6 +179,17 @@ function aeira_install() {
     'weight' => 3,
   ]);
   $menu_link->save();
+
+  $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+    'title' => 'Proxecto',
+    'link' => ['uri' => 'internal:/proxecto'],
+    'menu_name' => 'main',
+    'parent' => $top_level,
+      'expanded' => TRUE, 
+    'weight' => 4,
+  ]);
+  $menu_link->save();
+
 
   $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
     'title' => 'Contacto',
@@ -223,5 +227,55 @@ function aeira_install() {
     'path' => '/node/' . $nid,
     'alias' => '/front',
   ]);            
-  $path_alias->save();  
+  $path_alias->save();
+  
+    // Crear contenido portada
+  $node = Node::create(['type' => 'paxina']);
+  $node->set('title','Páxina de inicio');
+  $node->set('body', '
+    <h1 class="text-center">AEira</h1>
+    <p class="text-center"><b>Parabéns</b>, a instalación rematou con éxito.</p>
+    <p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Noche_sobre_Ferrolterra_-_panoramio.jpg/1024px-Noche_sobre_Ferrolterra_-_panoramio.jpg" class="rounded mx-auto d-block" alt="...">
+    </p>
+    <p class="text-center"><a href="https://commons.wikimedia.org/wiki/File:Noche_sobre_Ferrolterra_-_panoramio.jpg">Imaxe orixinal de Carrodeguas</a>
+    <h6 class="text-center">Software libre para catalogación do patrimonio.</h3>
+    <h6 class="text-center">Versión Ferrolterra.</h3>');
+  $node->body->format = 'full';
+    
+  $node->set('uid', 1);
+  $node->set('langcode', 'gl');
+  $node->status = 1;
+                
+  $node->enforceIsNew();
+  $node->save();
+                
+  $nid = $node->id();
+  $path_alias = \Drupal\path_alias\Entity\PathAlias::create([
+    'path' => '/node/' . $nid,
+    'alias' => '/front',
+  ]);            
+  $path_alias->save();
+
+  // Crear contenido portada
+  $node = Node::create(['type' => 'paxina']);
+  $node->set('title','Proxecto');
+  $node->set('body', 'Contido da páxina de proxecto');
+  $node->body->format = 'full';
+    
+  $node->set('uid', 1);
+  $node->set('langcode', 'gl');
+  $node->status = 1;
+                
+  $node->enforceIsNew();
+  $node->save();
+                
+  $nid = $node->id();
+  $path_alias = \Drupal\path_alias\Entity\PathAlias::create([
+    'path' => '/node/' . $nid,
+    'alias' => '/proxecto',
+  ]);            
+  $path_alias->save();    
+  
+
 } 
