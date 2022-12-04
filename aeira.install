@@ -7,6 +7,7 @@ use \Drupal\Core\Language\Language;
 use \Drupal\Core\Controller\ControllerBase;
 use \Symfony\Component\DependencyInjection\ContainerInterface;
 use \Drupal\Core\Extension\ModuleHandlerInterface;
+use \Drupal\Core\File\FileSystemInterface;
 
 /**
  * @file
@@ -66,14 +67,36 @@ function aeira_install() {
   $arquivoDemoElementos = file_get_contents($demoFilePath);
   $demoElementos = json_decode($arquivoDemoElementos, true);
   array_shift($demoElementos);  
+
+  $extension_list = \Drupal::service('extension.list.profile');
+
   
   foreach($demoElementos as $element => $key){
     foreach($key as $value => $data) {
      
-      $imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
-      $file_data = file_get_contents($imageUri);
+      //$imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
+      //$file_data = file_get_contents($imageUri);
+      $filepath = $extension_list->getPath('aeira') . '/content/demo/images/'. $data["properties"]["img"] ;
+
       // @see https://www.drupal.org/node/3223520
-      $file = \Drupal::service('file.repository')->writeData($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
+      // @see https://gorannikolovski.com/blog/drupal-create-file-programmatically
+      //$file = \Drupal::service('file.repository')->writeData($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
+
+      $directory = 'public://aeira';
+      $file_system = \Drupal::service('file_system');
+      $file_system->prepareDirectory($directory, FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+      $file_system->copy($filepath, $directory . '/' . basename($filepath), FileSystemInterface::EXISTS_REPLACE);
+      
+            
+
+      $file = File::create([
+        'filename' => basename($filepath),
+        'uri' => $directory . '/' . basename($filepath),
+        'status' => 1,
+        'uid' => 1,
+      ]);
+      $file->save();
+      
       $media = Media::create([
         'bundle'           => 'imaxe_elemento',
         'uid'              => 1,
@@ -83,6 +106,7 @@ function aeira_install() {
           'title' => $data["properties"]["title"],
         ],
       ]);
+
       $media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
  
       $node = Node::create([
@@ -112,9 +136,8 @@ function aeira_install() {
       $contido->set('field_acceso_elemento',1);
       $contido->set('field_concello_elemento',1);
       $contido->set('field_codigo_elemento', 'DEMO');
-
       $contido->set('field_imaxe_elemento', $media->id());
-
+      
       $contido->save();   
 
     }
