@@ -7,7 +7,6 @@ use \Drupal\Core\Language\Language;
 use \Drupal\Core\Controller\ControllerBase;
 use \Symfony\Component\DependencyInjection\ContainerInterface;
 use \Drupal\Core\Extension\ModuleHandlerInterface;
-use \Drupal\Core\File\FileSystemInterface;
 
 /**
  * @file
@@ -73,7 +72,8 @@ function aeira_install() {
      
       $imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
       $file_data = file_get_contents($imageUri);
-      $file = FileSystemInterface::saveData($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
+      // @see https://www.drupal.org/node/3223520
+      $file = \Drupal::service('file.repository')->writeData($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
       $media = Media::create([
         'bundle'           => 'imaxe_elemento',
         'uid'              => 1,
