@@ -70,7 +70,7 @@ function aeira_install() {
   foreach($demoElementos as $element => $key){
     foreach($key as $value => $data) {
      
-      $imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
+      /*$imageUri = drupal_get_path('profile', 'aeira') . '/content/demo/images/' . $data["properties"]["img"];
       $file_data = file_get_contents($imageUri);
       $file = file_save_data($file_data, 'public://' . rand(0,99999) . '-' . $data["properties"]["img"] , 'FILE_EXISTS_REPLACE');
       $media = Media::create([
@@ -81,7 +81,7 @@ function aeira_install() {
           'alt' => $data["properties"]["title"],
           'title' => $data["properties"]["title"],
         ],
-      ]);
+      ]);*/
       $media->setName($data["properties"]["title"])->setPublished(TRUE)->save();       
  
       $node = Node::create([
