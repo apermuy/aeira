@@ -8,6 +8,7 @@ use \Drupal\Core\Controller\ControllerBase;
 use \Symfony\Component\DependencyInjection\ContainerInterface;
 use \Drupal\Core\Extension\ModuleHandlerInterface;
 use \Drupal\Core\File\FileSystemInterface;
+use \Drupal\file\Entity\File;
 
 /**
  * @file
@@ -137,7 +138,7 @@ function aeira_install() {
       $contido->set('field_concello_elemento',1);
       $contido->set('field_codigo_elemento', 'DEMO');
       $contido->set('field_imaxe_elemento', $media->id());
-      
+
       $contido->save();   
 
     }
