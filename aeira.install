@@ -91,7 +91,7 @@ function aeira_install() {
         'moderation_state' => 'published',
         'status' => 1,
         'title' => $data["properties"]["title"],
-        'field_imaxe_elemento' => ['target_id' => $media->id()],
+        //'field_imaxe_elemento' => ['target_id' => $media->id()],
       ]);
       $node->save(); 
  
@@ -112,7 +112,7 @@ function aeira_install() {
       $contido->set('field_concello_elemento',1);
       $contido->set('field_codigo_elemento', 'DEMO');
 
-      $contido->set('field_imaxe_elemento', $media->id());
+      //$contido->set('field_imaxe_elemento', $media->id());
 
       $contido->save();   
 
